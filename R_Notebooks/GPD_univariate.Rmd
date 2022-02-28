@@ -4,13 +4,24 @@ author: "Mongi Nouira"
 output: github_document
 ---
 
-```{r}
+```{r include=FALSE}
 knitr::opts_chunk$set(fig.align="center", echo=FALSE)
+
+library(htmltools)
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+library("ismev")
 ```
 
 Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). We focus on the Technology sector.
 
-```{r}
+```{r echo=FALSE}
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
 ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
@@ -43,8 +54,6 @@ plot(gpd_mod)
 ```
 
 ```{r, fig.cap="Mean Residual Life Plot"}
-library("ismev")
-
 mrl.plot(ll$S.P.Technology)
 ```
 

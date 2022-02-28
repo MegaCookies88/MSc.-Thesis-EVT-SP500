@@ -2,20 +2,8 @@ GPD Univariate - EDA
 ================
 Mongi Nouira
 
-``` r
-knitr::opts_chunk$set(fig.align="center", echo=FALSE)
-```
-
 Using the univariate Generalized Pareto Distribution for EDA (Threshold
 selection, Frechet Scale, …). We focus on the Technology sector.
-
-    ## Loading required package: mgcv
-
-    ## Loading required package: nlme
-
-    ## Warning: package 'nlme' was built under R version 4.0.5
-
-    ## This is mgcv 1.8-34. For overview type 'help("mgcv-package")'.
 
 <div class="figure" style="text-align: center">
 
