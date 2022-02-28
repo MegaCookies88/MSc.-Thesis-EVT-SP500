@@ -1,17 +1,57 @@
 ---
 title: "GPD Univariate - EDA"
+author: "Mongi Nouira"
 output: github_document
 ---
 
 ```{r}
-knitr::opts_chunk$set(fig.align="center")
+knitr::opts_chunk$set(fig.align="center", echo=FALSE)
 ```
 
-Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...).
+Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). We focus on the Technology sector.
 
 ```{r}
-plot(cars)
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+ll$Date = df$Date[-1]
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+```{r eval=FALSE, include=FALSE}
+library("evir")
+
+gpd_mod <- gpd(ll$S.P.Technology, threshold=5, method="ml", information="observed")
+
+par(mfrow=c(2,2))
+plot.gpd(gpd_mod)
+```
+
+```{r eval=FALSE, include=FALSE}
+library("extRemes")
+
+mrlplot(ll$S.P.Technology)
+```
+
+```{r eval=FALSE, include=FALSE}
+library("mev")
+
+gpd_mod <- fit.gpd(ll$S.P.Technology, threshold=5)
+
+par(mfrow=c(1,2))
+plot(gpd_mod)
+```
+
+```{r, fig.cap="Mean Residual Life Plot"}
+library("ismev")
+
+mrl.plot(ll$S.P.Technology)
+```
+
+```{r, fig.cap="Fitted GPD With Threshold u=5 Diagnostic"}
+fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=5, npy=251)
+gpd.diag(fit)
+```
+
+
 
