@@ -1,13 +1,16 @@
-GPD Univariate - EDA
+GPD Univariate/Bivariate - EDA
 ================
 Mongi Nouira
 
 Using the univariate Generalized Pareto Distribution for EDA (Threshold
-selection, Frechet Scale, …). We focus on the Technology sector.
+selection, Frechet Scale, …). The time series correspond to log daily
+losses. We focus on the Technology sector.
 
 <p align="center">
 
 </p>
+
+## Technology Sector
 
 <p align="center">
 
@@ -18,6 +21,22 @@ selection, Frechet Scale, …). We focus on the Technology sector.
 <p class="caption">
 
 Mean Residual Life Plot
+
+</p>
+
+</div>
+
+</p>
+
+<p align="center">
+
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" alt="Parameters vs Threshold"  />
+
+<p class="caption">
+
+Parameters vs Threshold
 
 </p>
 
@@ -50,7 +69,7 @@ Mean Residual Life Plot
 
 <div class="figure" style="text-align: center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" alt="Fitted GPD With Threshold u=5 Diagnostic"  />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" alt="Fitted GPD With Threshold u=5 Diagnostic"  />
 
 <p class="caption">
 
@@ -59,5 +78,51 @@ Fitted GPD With Threshold u=5 Diagnostic
 </p>
 
 </div>
+
+</p>
+
+## Bivariate EDA
+
+<p align="center">
+
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" alt="Technology/Energy Pair - 95% Marginal Quantiles"  />
+
+<p class="caption">
+
+Technology/Energy Pair - 95% Marginal Quantiles
+
+</p>
+
+</div>
+
+</p>
+
+<p align="center">
+
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" alt="Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale"  />
+
+<p class="caption">
+
+Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale
+
+</p>
+
+</div>
+
+</p>
+
+<p align="center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /><img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-2.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 </p>

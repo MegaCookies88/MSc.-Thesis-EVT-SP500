@@ -1,5 +1,5 @@
 ---
-title: "GPD Univariate - EDA"
+title: "GPD Univariate/Bivariate - EDA"
 author: "Mongi Nouira"
 output: github_document
 ---
@@ -17,9 +17,10 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 })
 
 library("ismev")
+library("evd")
 ```
 
-Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). We focus on the Technology sector.
+Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). The time series correspond to log daily losses. We focus on the Technology sector.
 
 ```{r echo=FALSE}
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
@@ -53,8 +54,14 @@ par(mfrow=c(1,2))
 plot(gpd_mod)
 ```
 
+## Technology Sector
+
 ```{r, fig.cap="Mean Residual Life Plot"}
-mrl.plot(ll$S.P.Technology)
+mrl.plot(ll$S.P.Technology, conf=0.95)
+```
+
+```{r, fig.cap="Parameters vs Threshold"}
+gpd.fitrange(ll$S.P.Technology, 0, 7)
 ```
 
 ```{r, fig.cap="Fitted GPD With Threshold u=5 Diagnostic"}
@@ -62,5 +69,48 @@ fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=5, npy=251)
 gpd.diag(fit)
 ```
 
+## Bivariate EDA
 
+```{r, fig.cap="Technology/Energy Pair - 95% Marginal Quantiles"}
+plot(x=ll$S.P.Technology, y=ll$S.P.Energy, xlab="Technology", ylab="Energy")
+abline(v=quantile(ll$S.P.Technology, 0.95), col="red")
+abline(h=quantile(ll$S.P.Energy, 0.95), col="red")
+```
+
+```{r, fig.cap="Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale"}
+frechet_scale = function(x,shape,scale,exec) -(log(1-exec*(1+shape*(x-5)/scale)^(-1/shape)))
+
+cond_nan = ll$S.P.Technology>2 & ll$S.P.Energy>2
+
+fit1 <- ismev::gpd.fit(ll$S.P.Technology, threshold=5, npy=251, show=FALSE)
+x1 = frechet_scale(ll$S.P.Technology[cond_nan],fit1$mle[2],fit1$mle[1],fit1$rate)
+
+fit2 <- ismev::gpd.fit(ll$S.P.Energy, threshold=5, npy=251, show=FALSE)
+x2 = frechet_scale(ll$S.P.Energy[cond_nan],fit2$mle[2],fit2$mle[1],fit2$rate)
+
+plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
+
+abline(v=quantile(x1, 0.80, na.rm=TRUE), col="red", untf=TRUE)
+abline(h=quantile(x2, 0.80, na.rm=TRUE), col="red", untf=TRUE)
+```
+
+```{r}
+sup_u = ll$S.P.Technology>0 & ll$S.P.Energy>0
+fitbv <- fbvevd(ll[sup_u,c(6,7)], model="log", std.err=FALSE)
+
+par(mfrow=c(2,2))
+plot(fitbv, mar=1, which=c(3,4))
+plot(fitbv, mar=2, which=c(3,4))
+
+par(mfrow=c(2,2))
+plot(fitbv, which=c(3:6))
+```
+
+```{r}
+u = apply(ll[,c(6,7)],2,quantile,0.95)
+fitbv <- fbvpot(ll[,c(6,7)], threshold=u, model="log", likelihood="poisson", std.err=FALSE)
+
+par(mfrow=c(1,2))
+plot(fitbv, which=c(1,3))
+```
 
