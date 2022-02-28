@@ -5,6 +5,12 @@ Mongi Nouira
 Using the univariate Generalized Pareto Distribution for EDA (Threshold
 selection, Frechet Scale, …). We focus on the Technology sector.
 
+<p align="center">
+
+</p>
+
+<p align="center">
+
 <div class="figure" style="text-align: center">
 
 <img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" alt="Mean Residual Life Plot"  />
@@ -16,6 +22,10 @@ Mean Residual Life Plot
 </p>
 
 </div>
+
+</p>
+
+<p align="center">
 
     ## $threshold
     ## [1] 5
@@ -49,3 +59,5 @@ Fitted GPD With Threshold u=5 Diagnostic
 </p>
 
 </div>
+
+</p>

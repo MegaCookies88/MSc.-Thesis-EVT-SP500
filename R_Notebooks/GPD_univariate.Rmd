@@ -5,7 +5,7 @@ output: github_document
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(fig.align="center", echo=FALSE)
+knitr::opts_chunk$set(fig.align="center", echo=FALSE, imgcenter=TRUE)
 
 library(htmltools)
 knitr::knit_hooks$set(imgcenter = function(before, options, envir){
