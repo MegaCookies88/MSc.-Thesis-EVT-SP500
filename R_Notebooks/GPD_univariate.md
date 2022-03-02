@@ -12,6 +12,13 @@ losses. We focus on the Technology sector.
 
 ## Technology Sector
 
+First, we look at the mean residual life plot with 95% confidence
+intervals. It is initially linear the shows curvature between -1 and 5
+then is reasonably linear relatively to confidence intervals. This may
+suggest that a loss of 5% is a good threshold. However, there are only
+24 exceedances in the data of 5045 observations. The threshold of 2%
+seems more appropriate with 367 exceedances.
+
 <p align="center">
 
 <div class="figure" style="text-align: center">
@@ -28,6 +35,9 @@ Mean Residual Life Plot
 
 </p>
 
+Second, we look at the stability of GPD parameters when changing the
+threshold. The selected threshold of 2 seems reasonable.
+
 <p align="center">
 
 <div class="figure" style="text-align: center">
@@ -43,6 +53,9 @@ Parameters vs Threshold
 </div>
 
 </p>
+
+Finally, we fit the GPD with threshold u=2. It is summarised as
+following :
 
 <p align="center">
 
@@ -67,9 +80,13 @@ Parameters vs Threshold
     ## $se
     ## [1] 0.07825049 0.05080156
 
+</p>
+
+<p align="center">
+
 <div class="figure" style="text-align: center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-5-1.png" alt="Fitted GPD With Threshold u=2 Diagnostic"  />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" alt="Fitted GPD With Threshold u=2 Diagnostic"  />
 
 <p class="caption">
 
@@ -83,21 +100,13 @@ Fitted GPD With Threshold u=2 Diagnostic
 
 ## Bivariate EDA : Technology/Energy
 
-<p align="center">
+In this section, we are interested in the asymptotic dependence between
+the technology and energy sectors.
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" alt="Technology/Energy Pair - Chi and Chi Bar Plots"  />
-
-<p class="caption">
-
-Technology/Energy Pair - Chi and Chi Bar Plots
-
-</p>
-
-</div>
-
-</p>
+First, we look at the scatter plots of the two sectors and the
+corresponding 95% marginal quantiles. We can also do the same plot after
+transformation to the Frechet scale and using the logarithmic scale for
+the axis.
 
 <p align="center">
 
@@ -115,15 +124,41 @@ Technology/Energy Pair - 95% Marginal Quantiles
 
 </p>
 
+Second, we look at the chi plots with 95% confidence intervals. The
+interpretation is not simple because the confidence intervals are large
+i.e. a high variance of the estimators but it seems that
+\(\bar\chi(q) \rightarrow 1\) when \(q \rightarrow 1\) with a value
+around 0.65. This supports the asymptotic dependence between the two
+sectors.
+
 <p align="center">
 
 <div class="figure" style="text-align: center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" alt="Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale"  />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" alt="Technology/Energy Pair - Chi and Chi Bar Plots"  />
 
 <p class="caption">
 
-Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale
+Technology/Energy Pair - Chi and Chi Bar Plots
+
+</p>
+
+</div>
+
+</p>
+
+Finally, we fit the logistic bivariate extreme value distribution for
+the exceedances over the threshold u=2.
+
+<p align="center">
+
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" alt="Logistic Bivariate EVD - Threshold u=2 - Marginals"  />
+
+<p class="caption">
+
+Logistic Bivariate EVD - Threshold u=2 - Marginals
 
 </p>
 
@@ -133,12 +168,36 @@ Technology/Energy Pair - 95% Marginal Quantiles - Frechet Scale
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /><img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-2.png" style="display: block; margin: auto;" /><img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-3.png" style="display: block; margin: auto;" /><img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-4.png" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" alt="Logistic Bivariate EVD - Threshold u=2 - Dependence"  />
+
+<p class="caption">
+
+Logistic Bivariate EVD - Threshold u=2 - Dependence
 
 </p>
 
+</div>
+
+</p>
+
+We can also do the same thing using another function “evd::fbvpot” and
+specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate
+Extreme Value Distributions to Threshold Exceedances.
+
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" alt="MLE Logistic BEVD - u=2"  />
+
+<p class="caption">
+
+MLE Logistic BEVD - u=2
+
+</p>
+
+</div>
 
 </p>
