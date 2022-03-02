@@ -5,9 +5,8 @@ output: github_document
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(fig.align="center", echo=FALSE, imgcenter=TRUE)
-
 library(htmltools)
+
 knitr::knit_hooks$set(imgcenter = function(before, options, envir){
   if (before) {
     HTML("<p align='center'>")
@@ -15,6 +14,8 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
     HTML("</p>")
   }
 })
+
+knitr::opts_chunk$set(fig.align="center", echo=FALSE, imgcenter=TRUE)
 
 library("ismev")
 library("evd")
