@@ -21,17 +21,7 @@ seems more appropriate with 367 exceedances.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-3-1.png" alt="Mean Residual Life Plot"  />
-
-<p class="caption">
-
-Mean Residual Life Plot
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -40,17 +30,7 @@ threshold. The selected threshold of 2 seems reasonable.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-4-1.png" alt="Parameters vs Threshold"  />
-
-<p class="caption">
-
-Parameters vs Threshold
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -84,17 +64,7 @@ following :
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" alt="Fitted GPD With Threshold u=2 Diagnostic"  />
-
-<p class="caption">
-
-Fitted GPD With Threshold u=2 Diagnostic
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -110,17 +80,7 @@ the axis.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" alt="Technology/Energy Pair - 95% Marginal Quantiles"  />
-
-<p class="caption">
-
-Technology/Energy Pair - 95% Marginal Quantiles
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -133,17 +93,7 @@ sectors.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" alt="Technology/Energy Pair - Chi and Chi Bar Plots"  />
-
-<p class="caption">
-
-Technology/Energy Pair - Chi and Chi Bar Plots
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -152,33 +102,13 @@ the exceedances over the threshold u=2.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" alt="Logistic Bivariate EVD - Threshold u=2 - Marginals"  />
-
-<p class="caption">
-
-Logistic Bivariate EVD - Threshold u=2 - Marginals
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" alt="Logistic Bivariate EVD - Threshold u=2 - Dependence"  />
-
-<p class="caption">
-
-Logistic Bivariate EVD - Threshold u=2 - Dependence
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -188,16 +118,6 @@ Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<div class="figure" style="text-align: center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" alt="MLE Logistic BEVD - u=2"  />
-
-<p class="caption">
-
-MLE Logistic BEVD - u=2
-
-</p>
-
-</div>
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 </p>

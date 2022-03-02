@@ -22,6 +22,10 @@ knitr::opts_chunk$set(
 
 library("ismev")
 library("evd")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
 ```
 
 Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). The time series correspond to log daily losses. We focus on the Technology sector.
@@ -39,14 +43,16 @@ ll$Date = df$Date[-1]
 
 First, we look at the mean residual life plot with 95% confidence intervals. It is initially linear the shows curvature between -1 and 5 then is reasonably linear relatively to confidence intervals. This may suggest that a loss of 5% is a good threshold. However, there are only 24 exceedances in the data of 5045 observations. The threshold of 2% seems more appropriate with 367 exceedances.
 
-```{r, fig.cap="Mean Residual Life Plot"}
+```{r}
 mrl.plot(ll$S.P.Technology, conf=0.95)
+title(main="Mean Residual Life Plot")
 ```
 
 Second, we look at the stability of GPD parameters when changing the threshold. The selected threshold of 2 seems reasonable.
 
-```{r, fig.cap="Parameters vs Threshold"}
+```{r}
 gpd.fitrange(ll$S.P.Technology, 0, 7)
+title(main="Parameters vs Threshold")
 ```
 
 Finally, we fit the GPD with threshold u=2. It is summarised as following :
@@ -55,8 +61,11 @@ Finally, we fit the GPD with threshold u=2. It is summarised as following :
 fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=2, npy=251)
 ```
 
-```{r, fig.cap="Fitted GPD With Threshold u=2 Diagnostic", fig.asp=1}
+```{r, fig.asp=1}
+par(mfrow=c(1,1), oma=c(0,0,2,0))
 gpd.diag(fit)
+par(oma=c(0,0,0,0))
+title(main="Fitted GPD With Threshold u=2 Diagnostic")
 ```
 
 ## Bivariate EDA : Technology/Energy
@@ -65,7 +74,7 @@ In this section, we are interested in the asymptotic dependence between the tech
 
 First, we look at the scatter plots of the two sectors and the corresponding 95% marginal quantiles. We can also do the same plot after transformation to the Frechet scale and using the logarithmic scale for the axis.
 
-```{r, fig.cap="Technology/Energy Pair - 95% Marginal Quantiles"}
+```{r}
 u = 2
 frechet_scale = function(x,shape,scale,exec) -(log(1-exec*(1+shape*(x-u)/scale)^(-1/shape)))
 
@@ -79,24 +88,40 @@ x2 = frechet_scale(ll$S.P.Energy[cond_nan],fit2$mle[2],fit2$mle[1],fit2$rate)
 
 par(mfrow=c(1,2), pty="s")
 plot(x=ll$S.P.Technology, y=ll$S.P.Energy, xlab="Technology", ylab="Energy")
-abline(v=quantile(ll$S.P.Technology, 0.95), col="red")
-abline(h=quantile(ll$S.P.Energy, 0.95), col="red")
+abline(v=quantile(ll$S.P.Technology, 0.95), col=c2)
+abline(h=quantile(ll$S.P.Energy, 0.95), col=c2)
 
 plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
-abline(v=quantile(x1, 0.80, na.rm=TRUE), col="red", untf=TRUE)
-abline(h=quantile(x2, 0.80, na.rm=TRUE), col="red", untf=TRUE)
+abline(v=quantile(x1, 0.80, na.rm=TRUE), col=c2, untf=TRUE)
+abline(h=quantile(x2, 0.80, na.rm=TRUE), col=c2, untf=TRUE)
+
+title(main="Technology/Energy Pair - 95% Marginal Quantiles", outer=TRUE, line=-2)
 ```
 
 Second, we look at the chi plots with 95% confidence intervals. The interpretation is not simple because the confidence intervals are large i.e. a high variance of the estimators but it seems that $\bar\chi(q) \rightarrow 1$ when $q \rightarrow 1$ with a value around 0.65. This supports the asymptotic dependence between the two sectors.
 
-```{r, fig.cap="Technology/Energy Pair - Chi and Chi Bar Plots"}
-par(mfrow=c(1,2), pty="s")
-evd::chiplot(ll[,c(6,7)])
+```{r}
+par(pty="s")
+evd::chiplot(
+  ll[,c(6,7)], which=1, 
+  main1="Technology/Energy", 
+  xlab="Quantile", ylab1="Chi / Chi Bar",
+  col=c1, cicol=c1
+)
+par(new=TRUE)
+evd::chiplot(
+  ll[,c(6,7)], which=2, 
+  main2="", xlab="", ylab2="",
+  col=c2, cicol=c2
+)
+
+grid(nx=10,ny=20)
+legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.8, fill=c(c1,c2))
 ```
 
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold u=2.
 
-```{r, fig.cap="Logistic Bivariate EVD - Threshold u=2 - Marginals", fig.asp=1}
+```{r, fig.asp=1}
 sup_u = ll$S.P.Technology>2 & ll$S.P.Energy>2
 fitbv <- fbvevd(ll[sup_u,c(6,7)], model="log", std.err=FALSE)
 
@@ -105,7 +130,7 @@ plot(fitbv, mar=1, which=c(3,4))
 plot(fitbv, mar=2, which=c(3,4))
 ```
 
-```{r, fig.cap="Logistic Bivariate EVD - Threshold u=2 - Dependence", fig.asp=1}
+```{r, fig.asp=1}
 par(mfrow=c(2,2), pty="s")
 plot(fitbv, which=c(3,4))
 plot(fitbv, which=c(5,6))
@@ -113,11 +138,12 @@ plot(fitbv, which=c(5,6))
 
 We can also do the same thing using another function "evd::fbvpot" and specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate Extreme Value Distributions to Threshold Exceedances.
 
-```{r, fig.cap="MLE Logistic BEVD - u=2"}
+```{r}
 u = apply(ll[,c(6,7)],2,quantile,0.95)
 fitbv <- fbvpot(ll[,c(6,7)], threshold=u, model="log", likelihood="poisson", std.err=FALSE)
 
 par(mfrow=c(1,2), pty="s")
 plot(fitbv, which=c(1,3))
+title(main="MLE Logistic BEVD - Threshold = 2", outer=TRUE, line=-2)
 ```
 
