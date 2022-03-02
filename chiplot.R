@@ -1,0 +1,104 @@
+library("evd")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+
+# Data
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+ll$Date = df$Date[-1]
+
+# Sectors
+sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
+sectors = as.vector(sectors)
+
+# Plot All Pairs
+jpeg(
+  file = "~/Documents/GitHub/PDM_2022/figures/chiplot.jpeg",
+  width = 2000, height = 2000, quality = 100, res = 100
+)
+
+par(mfrow=c(11,11), pty="s", mar=c(0,0,0,0), oma=c(4,4,0,0))
+
+for (i in seq(1,11)){
+  for (j in seq(1,11)){
+    
+    if (j>i){
+      plot.new()
+    } else{
+      if (j==i){
+        plot.new()
+        text(x = grconvertX(0.5, from = "npc"),
+             y = grconvertY(0.5, from = "npc"),
+             labels = sectors[i],
+             cex=1, font=2, col=c1, srt=0)
+      } else{
+        
+        par(pty="s")
+        
+        evd::chiplot(
+          ll[,c(i,j)], which=1, 
+          main1="",
+          #main1=paste(sectors[i],sectors[j],sep="/"), 
+          xlab="Quantile", ylab1="Chi / Chi Bar",
+          col=c1, cicol=c1, labels=FALSE
+        )
+        
+        par(new=TRUE)
+        
+        evd::chiplot(
+          ll[,c(i,j)], which=2, 
+          main2="", xlab="", ylab2="",
+          col=c2, cicol=c2, labels=FALSE
+        )
+        
+        grid(nx=10,ny=20)
+        
+      }
+    }
+    
+  }
+}
+
+dev.off()
+
+# Plot technology vs other sectors
+jpeg(
+  file = "~/Documents/GitHub/PDM_2022/figures/chiplot_technology.jpeg",
+  width = 2000, height = 2000, quality = 100, res = 100
+)
+
+par(mfrow=c(3,4), pty="s", mar=rep(3,4))
+
+for (i in c(6)){
+  for (j in seq(1,11)){
+    if (j!=6){
+      
+      evd::chiplot(
+        ll[,c(i,j)], which=1,
+        main1=paste(sectors[i],sectors[j],sep="/"), 
+        xlab="Quantile", ylab1="Chi / Chi Bar",
+        col=c1, cicol=c1
+      )
+      
+      par(new=TRUE)
+      
+      evd::chiplot(
+        ll[,c(i,j)], which=2, 
+        main2="", xlab="", ylab2="",
+        col=c2, cicol=c2
+      )
+      
+      grid(nx=10,ny=20)
+      legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.5, fill=c(c1,c2))
+      
+    }
+  }
+}
+
+dev.off()
+
+
+
