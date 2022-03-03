@@ -84,6 +84,16 @@ the axis.
 
 </p>
 
+We can compute the two marginals empirical cumulative distribution
+function then transform both variables to the Frechet scale using the
+formula \(\hat{X}=-\frac{1}{log(F_X(X))}\).
+
+<p align="center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+</p>
+
 Second, we look at the chi plots with 95% confidence intervals. The
 interpretation is not simple because the confidence intervals are large
 i.e. a high variance of the estimators but it seems that
@@ -93,7 +103,7 @@ sectors.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -102,13 +112,13 @@ the exceedances over the threshold u=2.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -118,6 +128,6 @@ Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 </p>

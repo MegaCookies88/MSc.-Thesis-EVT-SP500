@@ -16,8 +16,8 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 })
 
 knitr::opts_chunk$set(
-  echo=FALSE, cache=TRUE,
-  imgcenter=TRUE, fig.align="center", dpi=250, fig.width=7
+  echo=FALSE, cache=TRUE, imgcenter=TRUE, 
+  fig.align="center", dpi=150, fig.width=7
 )
 
 library("ismev")
@@ -62,7 +62,7 @@ fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=2, npy=251)
 ```
 
 ```{r, fig.asp=1}
-par(mfrow=c(1,1), oma=c(0,0,2,0))
+par(mfrow=c(1,1), oma=c(0,0,4,0))
 gpd.diag(fit)
 par(oma=c(0,0,0,0))
 title(main="Fitted GPD With Threshold u=2 Diagnostic")
@@ -92,10 +92,27 @@ abline(v=quantile(ll$S.P.Technology, 0.95), col=c2)
 abline(h=quantile(ll$S.P.Energy, 0.95), col=c2)
 
 plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
-abline(v=quantile(x1, 0.80, na.rm=TRUE), col=c2, untf=TRUE)
-abline(h=quantile(x2, 0.80, na.rm=TRUE), col=c2, untf=TRUE)
+#abline(v=quantile(x1, 0.95, na.rm=TRUE), col=c2, untf=TRUE)
+#abline(h=quantile(x2, 0.95, na.rm=TRUE), col=c2, untf=TRUE)
 
 title(main="Technology/Energy Pair - 95% Marginal Quantiles", outer=TRUE, line=-2)
+```
+
+We can compute the two marginals empirical cumulative distribution function then transform both variables to the Frechet scale using the formula $\hat{X}=-\frac{1}{log(F_X(X))}$.
+
+```{r}
+fn1 = ecdf(ll$S.P.Technology)
+x1 = fn1(ll$S.P.Technology)
+q1 = quantile(ll$S.P.Technology, 0.95)
+
+fn2 = ecdf(ll$S.P.Energy)
+x2 = fn2(ll$S.P.Technology)
+q2 = quantile(ll$S.P.Energy, 0.95)
+
+plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
+abline(v=fn1(q1), col=c2, untf=TRUE)
+abline(h=fn2(q2), col=c2, untf=TRUE)
+title(main="Technology/Energy Pair - 95% Marginal Quantiles")
 ```
 
 Second, we look at the chi plots with 95% confidence intervals. The interpretation is not simple because the confidence intervals are large i.e. a high variance of the estimators but it seems that $\bar\chi(q) \rightarrow 1$ when $q \rightarrow 1$ with a value around 0.65. This supports the asymptotic dependence between the two sectors.
@@ -142,8 +159,9 @@ We can also do the same thing using another function "evd::fbvpot" and specifyin
 u = apply(ll[,c(6,7)],2,quantile,0.95)
 fitbv <- fbvpot(ll[,c(6,7)], threshold=u, model="log", likelihood="poisson", std.err=FALSE)
 
-par(mfrow=c(1,2), pty="s")
+par(mfrow=c(1,2), pty="s", oma=c(0,0,4,0))
 plot(fitbv, which=c(1,3))
-title(main="MLE Logistic BEVD - Threshold = 2", outer=TRUE, line=-2)
+par(oma=c(0,0,0,0))
+title(main="MLE Logistic BEVD - Threshold = 2", outer=TRUE, line=-3)
 ```
 
