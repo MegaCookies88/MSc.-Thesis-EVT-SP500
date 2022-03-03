@@ -66,7 +66,7 @@ dev.off()
 
 # Plot technology vs other sectors
 jpeg(
-  file = "~/Documents/GitHub/PDM_2022/figures/chiplot_technology.jpeg",
+  file = "~/Documents/GitHub/PDM_2022/figures/chiplot_tech.jpeg",
   width = 2000, height = 2000, quality = 100, res = 100
 )
 
