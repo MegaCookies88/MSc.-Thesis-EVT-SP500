@@ -112,7 +112,20 @@ the exceedances over the threshold u=2.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+    ## 
+    ## Call: fbvevd(x = ll[sup_u, c(6, 7)], model = "log", std.err = FALSE) 
+    ## Deviance: 1100.8 
+    ## AIC: 1114.8 
+    ## Dependence: 0.4329932 
+    ## 
+    ## Estimates
+    ##   loc1  scale1  shape1    loc2  scale2  shape2     dep  
+    ## 2.7285  0.6929  0.3923  3.0406  1.0431  0.4322  0.6480  
+    ## 
+    ## Optimization Information
+    ##   Convergence: successful 
+    ##   Function Evaluations: 52 
+    ##   Gradient Evaluations: 11
 
 </p>
 
@@ -122,12 +135,18 @@ the exceedances over the threshold u=2.
 
 </p>
 
+<p align="center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+</p>
+
 We can also do the same thing using another function “evd::fbvpot” and
 specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate
 Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 </p>

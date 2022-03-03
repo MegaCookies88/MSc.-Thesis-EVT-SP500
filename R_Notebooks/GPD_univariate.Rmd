@@ -138,10 +138,14 @@ legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.8, fill=c(c1,c2))
 
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold u=2.
 
-```{r, fig.asp=1}
+```{r, echo=FALSE}
 sup_u = ll$S.P.Technology>2 & ll$S.P.Energy>2
 fitbv <- fbvevd(ll[sup_u,c(6,7)], model="log", std.err=FALSE)
+fitbv
+```
 
+
+```{r, fig.asp=1}
 par(mfrow=c(2,2), pty="s")
 plot(fitbv, mar=1, which=c(3,4))
 plot(fitbv, mar=2, which=c(3,4))
@@ -157,7 +161,7 @@ We can also do the same thing using another function "evd::fbvpot" and specifyin
 
 ```{r}
 u = apply(ll[,c(6,7)],2,quantile,0.95)
-fitbv <- fbvpot(ll[,c(6,7)], threshold=u, model="log", likelihood="poisson", std.err=FALSE)
+fitbv <- fbvpot(ll[,c(6,7)], threshold=c(2,2), model="log", likelihood="poisson", std.err=FALSE)
 
 par(mfrow=c(1,2), pty="s", oma=c(0,0,4,0))
 plot(fitbv, which=c(1,3))
