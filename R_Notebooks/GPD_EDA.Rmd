@@ -168,28 +168,7 @@ par(oma=c(0,0,0,0))
 title(main="MLE Tail Dependence Nu - 95% CI")
 ```
 
-Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold u=2.
-
-```{r, echo=FALSE}
-sup_u = ll$S.P.Technology>2 & ll$S.P.Energy>2
-fitbv <- fbvevd(ll[sup_u,c(6,7)], model="log", std.err=FALSE)
-fitbv
-```
-
-
-```{r, fig.asp=1}
-par(mfrow=c(2,2), pty="s")
-plot(fitbv, mar=1, which=c(3,4))
-plot(fitbv, mar=2, which=c(3,4))
-```
-
-```{r, fig.asp=1}
-par(mfrow=c(2,2), pty="s")
-plot(fitbv, which=c(3,4))
-plot(fitbv, which=c(5,6))
-```
-
-We can also do the same thing using another function "evd::fbvpot" and specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate Extreme Value Distributions to Threshold Exceedances.
+Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold. We use the function "evd::fbvpot" and specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 ```{r}
 u = apply(ll[,c(6,7)],2,quantile,0.95)

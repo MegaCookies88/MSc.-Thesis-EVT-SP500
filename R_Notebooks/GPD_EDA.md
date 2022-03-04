@@ -21,7 +21,7 @@ seems more appropriate with 367 exceedances.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -30,7 +30,7 @@ threshold. The selected threshold of 2 seems reasonable.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -64,7 +64,7 @@ following :
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -89,7 +89,7 @@ the axis.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -99,7 +99,7 @@ formula \(\hat{X}=-\frac{1}{log(F_X(X))}\).
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -112,56 +112,23 @@ sectors.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 Finally, we fit the logistic bivariate extreme value distribution for
-the exceedances over the threshold u=2.
+the exceedances over the threshold. We use the function “evd::fbvpot”
+and specifying the threshold u=2. Maximum-likelihood Fitting of
+Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-    ## 
-    ## Call: fbvevd(x = ll[sup_u, c(6, 7)], model = "log", std.err = FALSE) 
-    ## Deviance: 1100.8 
-    ## AIC: 1114.8 
-    ## Dependence: 0.4329932 
-    ## 
-    ## Estimates
-    ##   loc1  scale1  shape1    loc2  scale2  shape2     dep  
-    ## 2.7285  0.6929  0.3923  3.0406  1.0431  0.4322  0.6480  
-    ## 
-    ## Optimization Information
-    ##   Convergence: successful 
-    ##   Function Evaluations: 52 
-    ##   Gradient Evaluations: 11
-
-</p>
-
-<p align="center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
-
-</p>
-
-<p align="center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
-
-</p>
-
-We can also do the same thing using another function “evd::fbvpot” and
-specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate
-Extreme Value Distributions to Threshold Exceedances.
-
-<p align="center">
-
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 </p>
