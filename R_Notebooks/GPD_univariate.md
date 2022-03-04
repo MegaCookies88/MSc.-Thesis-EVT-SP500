@@ -78,6 +78,15 @@ corresponding 95% marginal quantiles. We can also do the same plot after
 transformation to the Frechet scale and using the logarithmic scale for
 the axis.
 
+  - Left Figure : Plot of positive losses only.
+  - Right Figure : Transformation to Frechet scale and using logarithmic
+    scale using GPD with threshold 2. Only the exceedances are plotted.
+  - Red Line : 95% marginal quantiles of losses (Original and
+    Transformed to Frechet scale).
+  - Blue Line : 95% marginal quantiles of the data plotted in the right
+    figure.
+  - Green Line : x+y=5 (Original and Transformed to Frechet scale).
+
 <p align="center">
 
 <img src="GPD_univariate_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
@@ -107,6 +116,12 @@ sectors.
 
 </p>
 
+<p align="center">
+
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
+</p>
+
 Finally, we fit the logistic bivariate extreme value distribution for
 the exceedances over the threshold u=2.
 
@@ -131,13 +146,13 @@ the exceedances over the threshold u=2.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -147,6 +162,6 @@ Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="GPD_univariate_files/figure-gfm/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 </p>

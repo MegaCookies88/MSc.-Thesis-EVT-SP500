@@ -26,6 +26,7 @@ library("evd")
 # Color Map
 c1 = "#636EFA"
 c2 = "#EF553B"
+c3 = "#00CC96"
 ```
 
 Using the univariate Generalized Pareto Distribution for EDA (Threshold selection, Frechet Scale, ...). The time series correspond to log daily losses. We focus on the Technology sector.
@@ -74,9 +75,15 @@ In this section, we are interested in the asymptotic dependence between the tech
 
 First, we look at the scatter plots of the two sectors and the corresponding 95% marginal quantiles. We can also do the same plot after transformation to the Frechet scale and using the logarithmic scale for the axis.
 
+- Left Figure : Plot of positive losses only.
+- Right Figure : Transformation to Frechet scale and using logarithmic scale using GPD with threshold 2. Only the exceedances are plotted.
+- Red Line : 95% marginal quantiles of losses (Original and Transformed to Frechet scale).
+- Blue Line : 95% marginal quantiles of the data plotted in the right figure.
+- Green Line : x+y=5 (Original and Transformed to Frechet scale).
+
 ```{r}
 u = 2
-frechet_scale = function(x,shape,scale,exec) -(log(1-exec*(1+shape*(x-u)/scale)^(-1/shape)))
+frechet_scale = function(x,shape,scale,exec) -1/(log(1-exec*(1+shape*(x-u)/scale)^(-1/shape)))
 
 cond_nan = ll$S.P.Technology>2 & ll$S.P.Energy>2
 
@@ -86,14 +93,25 @@ x1 = frechet_scale(ll$S.P.Technology[cond_nan],fit1$mle[2],fit1$mle[1],fit1$rate
 fit2 <- ismev::gpd.fit(ll$S.P.Energy, threshold=u, npy=251, show=FALSE)
 x2 = frechet_scale(ll$S.P.Energy[cond_nan],fit2$mle[2],fit2$mle[1],fit2$rate)
 
+q1 = quantile(ll$S.P.Technology, 0.95)
+q2 = quantile(ll$S.P.Energy, 0.95)
+
 par(mfrow=c(1,2), pty="s")
-plot(x=ll$S.P.Technology, y=ll$S.P.Energy, xlab="Technology", ylab="Energy")
-abline(v=quantile(ll$S.P.Technology, 0.95), col=c2)
-abline(h=quantile(ll$S.P.Energy, 0.95), col=c2)
+plot(x=ll$S.P.Technology, y=ll$S.P.Energy, xlab="Technology", ylab="Energy",
+     xlim=c(0,20), ylim=c(0,20))
+abline(v=q1, col=c2)
+abline(h=q2, col=c2)
+abline(a=5, b=-1, col=c3)
+
+fq1 = frechet_scale(5,fit1$mle[2],fit1$mle[1],fit1$rate)
+fq2 = frechet_scale(5,fit2$mle[2],fit2$mle[1],fit2$rate)
 
 plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
-#abline(v=quantile(x1, 0.95, na.rm=TRUE), col=c2, untf=TRUE)
-#abline(h=quantile(x2, 0.95, na.rm=TRUE), col=c2, untf=TRUE)
+abline(v=quantile(x1, 0.95, na.rm=TRUE), col=c1)
+abline(h=quantile(x2, 0.95, na.rm=TRUE), col=c1)
+abline(v=fq1, col=c2, untf=TRUE)
+abline(h=fq2, col=c2, untf=TRUE)
+abline(a=fq2, b=-fq2/fq1, col=c3, untf=TRUE)
 
 title(main="Technology/Energy Pair - 95% Marginal Quantiles", outer=TRUE, line=-2)
 ```
@@ -134,6 +152,19 @@ evd::chiplot(
 
 grid(nx=10,ny=20)
 legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.8, fill=c(c1,c2))
+```
+
+```{r}
+ula = apply(ll[,c(6,7)],2,rank)/(nrow(ll)+1)
+fla = apply(-1/log(ula),1,min)
+u_fla = quantile(fla, probs=c(0.025,0.975))
+
+par(pty="s", oma=c(0,0,2,0))
+tcplot(fla, u_fla, nt=100, pscale=TRUE, which=2, vci=FALSE, cilty=2, type="l", 
+       ylim=c(-0.2,1.2), ylab="Tail Dependence", xlab="q")
+abline(h=c(0,1), col=c2)
+par(oma=c(0,0,0,0))
+title(main="MLE Tail Dependence Nu - 95% Confidence Intervals")
 ```
 
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold u=2.
