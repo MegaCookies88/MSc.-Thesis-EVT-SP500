@@ -66,7 +66,7 @@ fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=2, npy=251)
 par(mfrow=c(1,1), oma=c(0,0,4,0))
 gpd.diag(fit)
 par(oma=c(0,0,0,0))
-title(main="Fitted GPD With Threshold u=2 Diagnostic")
+title(main="Fitted GPD With Threshold u=2 - Diagnostic")
 ```
 
 ## Bivariate EDA : Technology/Energy
@@ -113,7 +113,7 @@ abline(v=fq1, col=c2, untf=TRUE)
 abline(h=fq2, col=c2, untf=TRUE)
 abline(a=fq2, b=-fq2/fq1, col=c3, untf=TRUE)
 
-title(main="Technology/Energy Pair - 95% Marginal Quantiles", outer=TRUE, line=-2)
+title(main="Technology/Energy - Scatter", outer=TRUE, line=-2)
 ```
 
 We can compute the two marginals empirical cumulative distribution function then transform both variables to the Frechet scale using the formula $\hat{X}=-\frac{1}{log(F_X(X))}$.
@@ -131,7 +131,7 @@ par(pty="s")
 plot(x=x1, y=x2, xlab="Technology", ylab="Energy",log="xy")
 abline(v=fn1(q1), col=c2, untf=TRUE)
 abline(h=fn2(q2), col=c2, untf=TRUE)
-title(main="Technology/Energy Pair - 95% Marginal Quantiles")
+title(main="Technology/Energy - Empirical Frechet Scale")
 ```
 
 Second, we look at the chi plots with 95% confidence intervals. The interpretation is not simple because the confidence intervals are large i.e. a high variance of the estimators but it seems that $\bar\chi(q) \rightarrow 1$ when $q \rightarrow 1$ with a value around 0.65. This supports the asymptotic dependence between the two sectors.
@@ -165,7 +165,7 @@ tcplot(fla, u_fla, nt=100, pscale=TRUE, which=2, vci=FALSE, cilty=2, type="l",
        ylim=c(-0.2,1.2), ylab="Tail Dependence", xlab="q")
 abline(h=c(0,1), col=c2)
 par(oma=c(0,0,0,0))
-title(main="MLE Tail Dependence Nu - 95% Confidence Intervals")
+title(main="MLE Tail Dependence Nu - 95% CI")
 ```
 
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold u=2.
