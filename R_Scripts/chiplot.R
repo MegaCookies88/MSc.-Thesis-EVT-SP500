@@ -14,10 +14,13 @@ ll$Date = df$Date[-1]
 sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
 sectors = as.vector(sectors)
 
+# Output Parameters
+size = 3000
+
 # Plot All Pairs
 jpeg(
   file = "~/Documents/GitHub/PDM_2022/figures/chiplot.jpeg",
-  width = 2000, height = 2000, quality = 100, res = 100
+  width = size, height = size, quality = 100, res = 100
 )
 
 par(mfrow=c(11,11), pty="s", mar=c(0,0,0,0), oma=c(4,4,0,0))
@@ -64,10 +67,10 @@ for (i in seq(1,11)){
 
 dev.off()
 
-# Plot technology vs other sectors
+# Plot Technology vs Other Sectors
 jpeg(
   file = "~/Documents/GitHub/PDM_2022/figures/chiplot_tech.jpeg",
-  width = 2000, height = 2000, quality = 100, res = 100
+  width = size, height = size, quality = 100, res = 100
 )
 
 par(mfrow=c(3,4), pty="s", mar=rep(3,4))
