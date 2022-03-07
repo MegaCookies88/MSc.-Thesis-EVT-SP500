@@ -54,7 +54,7 @@ par(pty="s")
 plot(ll[,c(6,7)], main="Original And Componentwise Maxima Data")
 points(cml, col=c1)
 
-ecml <- -1/log(apply(cml,2,rank)/202)
+ecml <- -1/log(apply(cml,2,rank)/(nrow(cml)+1))
 plot(ecml, log="xy", main="Standard Frechet Margins")
 ```
 
