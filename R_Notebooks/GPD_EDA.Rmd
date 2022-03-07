@@ -120,17 +120,17 @@ We can compute the two marginals empirical cumulative distribution function then
 
 ```{r}
 fn1 = ecdf(ll$S.P.Technology)
-x1 = fn1(ll$S.P.Technology)
+x1 = -1/log(fn1(ll$S.P.Technology))
 q1 = quantile(ll$S.P.Technology, 0.95)
 
 fn2 = ecdf(ll$S.P.Energy)
-x2 = fn2(ll$S.P.Technology)
+x2 = -1/log(fn2(ll$S.P.Technology))
 q2 = quantile(ll$S.P.Energy, 0.95)
 
 par(pty="s")
-plot(x=x1, y=x2, xlab="Technology", ylab="Energy",log="xy")
-abline(v=fn1(q1), col=c2, untf=TRUE)
-abline(h=fn2(q2), col=c2, untf=TRUE)
+plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
+abline(v=-1/log(fn1(q1)), col=c2, untf=TRUE)
+abline(h=-1/log(fn2(q2)), col=c2, untf=TRUE)
 title(main="Technology/Energy - Empirical Frechet Scale")
 ```
 
