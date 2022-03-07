@@ -16,7 +16,7 @@ maxima observations.
 
 <p align="center">
 
-<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /><img src="GEV_EDA_files/figure-gfm/unnamed-chunk-3-2.png" style="display: block; margin: auto;" />
+<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -53,18 +53,21 @@ corresponding to the log model.
 
 <p align="center">
 
-    ##       loc1 scale1 shape1  loc2 scale2 shape2   dep
-    ## [1,] 1.962  0.973  0.150 2.258  1.048  0.244 0.642
-    ## [2,] 0.077  0.061  0.049 0.083  0.069  0.052 0.041
+|  loc1 | scale1 | shape1 |  loc2 | scale2 | shape2 |   dep |
+| ----: | -----: | -----: | ----: | -----: | -----: | ----: |
+| 1.962 |  0.973 |  0.150 | 2.258 |  1.048 |  0.244 | 0.642 |
+| 0.077 |  0.061 |  0.049 | 0.083 |  0.069 |  0.052 | 0.041 |
 
 </p>
+
+Test logistic vs bilogistic model. Test of independence.
 
 <p align="center">
 
     ## Analysis of Deviance Table
     ## 
     ##    M.Df Deviance Df  Chisq Pr(>chisq)
-    ## m3    8   1297.1                     
+    ## m2    8   1297.1                     
     ## m1    7   1297.9  1 0.8128     0.3673
 
     ## 

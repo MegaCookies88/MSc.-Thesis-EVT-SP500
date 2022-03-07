@@ -50,8 +50,8 @@ xx = rep(1:201, each=25)
 cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
 colnames(cml) = colnames(ll[,c(6,7)])
 
-par(pty="s")
-plot(ll[,c(6,7)], main="Original And Componentwise Maxima Data")
+par(mfrow=c(1,2), pty="s")
+plot(ll[,c(6,7)], main="Original And Maxima Data")
 points(cml, col=c1)
 
 ecml <- -1/log(apply(cml,2,rank)/(nrow(cml)+1))
@@ -97,8 +97,8 @@ Second, we use maximum likelihood estimation for various parametric Bivariate Ex
 
 ```{r}
 m1 = fbvevd(cml, model = "log")
-m2 = fbvevd(cml, asy1 = 1, model = "alog")
-m3 = fbvevd(cml, model = "bilog")
+m2 = fbvevd(cml, model = "bilog")
+m3 = fbvevd(cml, model = "ct")
 
 par(pty="s")
 plot(m1, which = 4, nplty = 1, col = c1, main="Parametric Estimation Of Dependence Function")
@@ -107,7 +107,7 @@ plot(m3, which = 4, nplty = 1, col = c3, add = TRUE)
 
 legend(
   "bottomright", 
-  legend=c("log","alog","bilog"), 
+  legend=c("logistic","bilogistic","Dirichlet"), 
   col=c(c1,c2,c3), lty=rep(1,3), cex=0.6
 )
 ```
@@ -115,11 +115,13 @@ legend(
 The following shows the parameter estimates and their standard errors corresponding to the log model.
 
 ```{r}
-round(rbind(fitted(m1), std.errors(m1)), 3)
+knitr::kable(round(rbind(fitted(m1), std.errors(m1)), 3))
 ```
 
+Test logistic vs bilogistic model. Test of independence.
+
 ```{r}
-anova(m3,m1)
+anova(m2,m1)
 evind.test(cml, method = "score")
 ```
 
