@@ -34,7 +34,7 @@ threshold. The selected threshold of 2 seems reasonable.
 
 </p>
 
-Finally, we fit the GPD with threshold u=2. It is summarised as
+Finally, we fit the GPD with threshold u=2. It is summarized as
 following :
 
 <p align="center">
@@ -81,25 +81,12 @@ the axis.
   - Left Figure : Plot of positive losses only.
   - Right Figure : Transformation to Frechet scale and using logarithmic
     scale using GPD with threshold 2. Only the exceedances are plotted.
-  - Red Line : 95% marginal quantiles of losses (Original and
-    Transformed to Frechet scale).
-  - Blue Line : 95% marginal quantiles of the data plotted in the right
-    figure.
+  - Red Line : 95% marginal quantiles of losses.
   - Green Line : x+y=5 (Original and Transformed to Frechet scale).
 
 <p align="center">
 
 <img src="GPD_EDA_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
-
-</p>
-
-We can compute the two marginals empirical cumulative distribution
-function then transform both variables to the Frechet scale using the
-formula \(\hat{X}=-\frac{1}{log(F_X(X))}\).
-
-<p align="center">
-
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -112,13 +99,17 @@ sectors.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 </p>
 
+Another approach is to fit a univariate GPD model to the variable
+\(T=\min{\{X_1,X_2\}}\) then the shape parameter provides an estimation
+of the coefficient of tail dependence \(\eta\).
+
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -129,6 +120,6 @@ Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>
