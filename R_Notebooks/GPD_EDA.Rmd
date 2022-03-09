@@ -56,7 +56,7 @@ gpd.fitrange(ll$S.P.Technology, 0, 7)
 title(main="Parameters vs Threshold")
 ```
 
-Finally, we fit the GPD with threshold u=2. It is summarised as following :
+Finally, we fit the GPD with threshold u=2. It is summarized as following :
 
 ```{r echo=FALSE}
 fit <- ismev::gpd.fit(ll$S.P.Technology, threshold=2, npy=251)
@@ -77,61 +77,47 @@ First, we look at the scatter plots of the two sectors and the corresponding 95%
 
 - Left Figure : Plot of positive losses only.
 - Right Figure : Transformation to Frechet scale and using logarithmic scale using GPD with threshold 2. Only the exceedances are plotted.
-- Red Line : 95% marginal quantiles of losses (Original and Transformed to Frechet scale).
-- Blue Line : 95% marginal quantiles of the data plotted in the right figure.
+- Red Line : 95% marginal quantiles of losses.
 - Green Line : x+y=5 (Original and Transformed to Frechet scale).
 
 ```{r}
 u = 2
-frechet_scale = function(x,shape,scale,exec) -1/(log(1-exec*(1+shape*(x-u)/scale)^(-1/shape)))
-
 cond_nan = ll$S.P.Technology>2 & ll$S.P.Energy>2
 
+# GPD Marginal Fit
 fit1 <- ismev::gpd.fit(ll$S.P.Technology, threshold=u, npy=251, show=FALSE)
-x1 = frechet_scale(ll$S.P.Technology[cond_nan],fit1$mle[2],fit1$mle[1],fit1$rate)
-
 fit2 <- ismev::gpd.fit(ll$S.P.Energy, threshold=u, npy=251, show=FALSE)
+
+# Frechet Scale Transformation
+frechet_scale = function(x,shape,scale,exec) -1/(log(1-exec*(1+shape*(x-u)/scale)^(-1/shape)))
+x1 = frechet_scale(ll$S.P.Technology[cond_nan],fit1$mle[2],fit1$mle[1],fit1$rate)
 x2 = frechet_scale(ll$S.P.Energy[cond_nan],fit2$mle[2],fit2$mle[1],fit2$rate)
 
+# Original quantiles
 q1 = quantile(ll$S.P.Technology, 0.95)
 q2 = quantile(ll$S.P.Energy, 0.95)
 
+# Transformed quantiles
+fq1 = frechet_scale(q1,fit1$mle[2],fit1$mle[1],fit1$rate)
+fq2 = frechet_scale(q2,fit2$mle[2],fit2$mle[1],fit2$rate)
+
+# Transformed green line
+f51 = frechet_scale(5,fit1$mle[2],fit1$mle[1],fit1$rate)
+f52 = frechet_scale(5,fit2$mle[2],fit2$mle[1],fit2$rate)
+
 par(mfrow=c(1,2), pty="s")
 plot(x=ll$S.P.Technology, y=ll$S.P.Energy, xlab="Technology", ylab="Energy",
-     xlim=c(0,20), ylim=c(0,20))
+     xlim=c(0,20), ylim=c(0,20), pch=16, cex=0.8)
 abline(v=q1, col=c2)
 abline(h=q2, col=c2)
 abline(a=5, b=-1, col=c3)
 
-fq1 = frechet_scale(5,fit1$mle[2],fit1$mle[1],fit1$rate)
-fq2 = frechet_scale(5,fit2$mle[2],fit2$mle[1],fit2$rate)
-
-plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
-abline(v=quantile(x1, 0.95, na.rm=TRUE), col=c1)
-abline(h=quantile(x2, 0.95, na.rm=TRUE), col=c1)
-abline(v=fq1, col=c2, untf=TRUE)
-abline(h=fq2, col=c2, untf=TRUE)
-abline(a=fq2, b=-fq2/fq1, col=c3, untf=TRUE)
+plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy", pch=16, cex=0.8)
+abline(v=fq1, col=c2)
+abline(h=fq2, col=c2)
+abline(a=f52, b=-f52/f51, col=c3, untf=TRUE)
 
 title(main="Technology/Energy - Scatter", outer=TRUE, line=-2)
-```
-
-We can compute the two marginals empirical cumulative distribution function then transform both variables to the Frechet scale using the formula $\hat{X}=-\frac{1}{log(F_X(X))}$.
-
-```{r}
-fn1 = ecdf(ll$S.P.Technology)
-x1 = -1/log(fn1(ll$S.P.Technology))
-q1 = quantile(ll$S.P.Technology, 0.95)
-
-fn2 = ecdf(ll$S.P.Energy)
-x2 = -1/log(fn2(ll$S.P.Technology))
-q2 = quantile(ll$S.P.Energy, 0.95)
-
-par(pty="s")
-plot(x=x1, y=x2, xlab="Technology", ylab="Energy", log="xy")
-abline(v=-1/log(fn1(q1)), col=c2, untf=TRUE)
-abline(h=-1/log(fn2(q2)), col=c2, untf=TRUE)
-title(main="Technology/Energy - Empirical Frechet Scale")
 ```
 
 Second, we look at the chi plots with 95% confidence intervals. The interpretation is not simple because the confidence intervals are large i.e. a high variance of the estimators but it seems that $\bar\chi(q) \rightarrow 1$ when $q \rightarrow 1$ with a value around 0.65. This supports the asymptotic dependence between the two sectors.
@@ -142,41 +128,41 @@ evd::chiplot(
   ll[,c(6,7)], which=1, 
   main1="Technology/Energy", 
   xlab="Quantile", ylab1="Chi / Chi Bar",
-  col=c1, cicol=c1
+  ylim1=c(0,1), col=c1, cicol=c1, lwd=2
 )
 par(new=TRUE)
 evd::chiplot(
   ll[,c(6,7)], which=2, 
-  main2="", xlab="", ylab2="",
-  col=c2, cicol=c2
+  main2="", xlab="", ylab2="", 
+  ylim2=c(0,1), col=c2, cicol=c2, lwd=2
 )
 
-grid(nx=10,ny=20)
 legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.8, fill=c(c1,c2))
 ```
+
+Another approach is to fit a univariate GPD model to the variable $T=\min{\{X_1,X_2\}}$ then the shape parameter provides an estimation of the coefficient of tail dependence $\eta$.
 
 ```{r}
 ula = apply(ll[,c(6,7)],2,rank)/(nrow(ll)+1)
 fla = apply(-1/log(ula),1,min)
 u_fla = quantile(fla, probs=c(0.025,0.975))
 
-par(pty="s", oma=c(0,0,2,0))
+par(pty="s", oma=c(0,0,1,0))
 tcplot(fla, u_fla, nt=100, pscale=TRUE, which=2, vci=FALSE, cilty=2, type="l", 
-       ylim=c(-0.2,1.2), ylab="Tail Dependence", xlab="q")
-abline(h=c(0,1), col=c2)
+       ylim=c(0,1.2), ylab="Eta", xlab="Quantile", lwd=2)
+abline(h=1, col=c2)
 par(oma=c(0,0,0,0))
-title(main="MLE Tail Dependence Nu - 95% CI")
+title(main="Technology/Energy")
 ```
 
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold. We use the function "evd::fbvpot" and specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 ```{r}
-u = apply(ll[,c(6,7)],2,quantile,0.95)
 fitbv <- fbvpot(ll[,c(6,7)], threshold=c(2,2), model="log", likelihood="poisson", std.err=FALSE)
 
 par(mfrow=c(1,2), pty="s", oma=c(0,0,4,0))
-plot(fitbv, which=c(1,3), col=c2)
+plot(fitbv, which=c(1,3), col=c2, xlim=c(0,20), ylim=c(0,20), tlty=3)
 par(oma=c(0,0,0,0))
-title(main="MLE Logistic BEVD - Threshold = 2", outer=TRUE, line=-3)
+title(main="Logistic BEVD Diagnostics", outer=TRUE, line=-3)
 ```
 
