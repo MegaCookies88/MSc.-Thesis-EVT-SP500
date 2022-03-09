@@ -35,8 +35,8 @@ for (i in seq(1,11)){
         plot.new()
         text(x = grconvertX(0.5, from = "npc"),
              y = grconvertY(0.5, from = "npc"),
-             labels = sectors[i],
-             cex=1, font=2, col=c1, srt=0)
+             labels = gsub("\\.","\n",sectors[i]),
+             cex=3, font=2, col=c1, srt=0)
       } else{
         
         fitbv <- fbvpot(
@@ -44,8 +44,9 @@ for (i in seq(1,11)){
           likelihood="poisson", std.err=FALSE
         )
         
-        par(pty="s")
-        plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="")
+        par(pty="s", xaxt="n", yaxt="n")
+        plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="",
+             xlim=c(0,20), ylim=c(0,20), lwd=2, tlty=3)
         
       }
     }
@@ -61,7 +62,7 @@ jpeg(
   width = size, height = size, quality = 100, res = 100
 )
 
-par(mfrow=c(3,4), pty="s", mar=rep(5,4))
+par(mfrow=c(3,4), pty="s", mar=c(0,6,0,6))
 
 for (i in c(6)){
   for (j in seq(1,11)){
@@ -73,7 +74,8 @@ for (i in c(6)){
       )
       
       par(pty="s")
-      plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="")
+      plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="",
+           xlim=c(0,20), ylim=c(0,20), cex.lab=3, lwd=2, tlty=3)
       
     }
   }
