@@ -35,29 +35,25 @@ for (i in seq(1,11)){
         plot.new()
         text(x = grconvertX(0.5, from = "npc"),
              y = grconvertY(0.5, from = "npc"),
-             labels = sectors[i],
-             cex=1, font=2, col=c1, srt=0)
+             labels = gsub("\\.","\n",sectors[i]),
+             cex=3, font=2, col=c1, srt=0)
       } else{
         
-        par(pty="s")
+        par(pty="s", xaxt="n", yaxt="n")
         
         evd::chiplot(
           ll[,c(i,j)], which=1, 
-          main1="",
-          #main1=paste(sectors[i],sectors[j],sep="/"), 
-          xlab="Quantile", ylab1="Chi / Chi Bar",
-          col=c1, cicol=c1, labels=FALSE
+          main1="", xlab="Quantile", ylab1="Chi / Chi Bar", ylim1=c(0,1),
+          col=c1, cicol=c1, lwd=2, cex=2
         )
         
         par(new=TRUE)
         
         evd::chiplot(
           ll[,c(i,j)], which=2, 
-          main2="", xlab="", ylab2="",
-          col=c2, cicol=c2, labels=FALSE
+          main2="", xlab="", ylab2="", ylim2=c(0,1),
+          col=c2, cicol=c2, lwd=2, cex=2
         )
-        
-        grid(nx=10,ny=20)
         
       }
     }
@@ -73,7 +69,7 @@ jpeg(
   width = size, height = size, quality = 100, res = 100
 )
 
-par(mfrow=c(3,4), pty="s", mar=rep(3,4))
+par(mfrow=c(3,4), pty="s")
 
 for (i in c(6)){
   for (j in seq(1,11)){
@@ -83,7 +79,7 @@ for (i in c(6)){
         ll[,c(i,j)], which=1,
         main1=paste(sectors[i],sectors[j],sep="/"), 
         xlab="Quantile", ylab1="Chi / Chi Bar",
-        col=c1, cicol=c1
+        col=c1, cicol=c1, ylim1=c(0,1), lwd=2, cex.main=2
       )
       
       par(new=TRUE)
@@ -91,17 +87,13 @@ for (i in c(6)){
       evd::chiplot(
         ll[,c(i,j)], which=2, 
         main2="", xlab="", ylab2="",
-        col=c2, cicol=c2
+        col=c2, cicol=c2, ylim2=c(0,1), lwd=2
       )
       
-      grid(nx=10,ny=20)
-      legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.5, fill=c(c1,c2))
+      legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=2, fill=c(c1,c2))
       
     }
   }
 }
 
 dev.off()
-
-
-
