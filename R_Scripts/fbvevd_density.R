@@ -62,7 +62,7 @@ jpeg(
   width = size, height = size, quality = 100, res = 100
 )
 
-par(mfrow=c(3,4), pty="s", mar=c(0,6,0,6))
+par(mfrow=c(3,4), pty="s", mar=rep(6,4))
 
 for (i in c(6)){
   for (j in seq(1,11)){
@@ -73,9 +73,8 @@ for (i in c(6)){
         likelihood="poisson", std.err=FALSE
       )
       
-      par(pty="s")
       plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="",
-           xlim=c(0,20), ylim=c(0,20), cex.lab=3, lwd=2, tlty=3)
+           xlim=c(0,20), ylim=c(0,20), cex.lab=3, cex.axis=2, lwd=2, tlty=3)
       
     }
   }
