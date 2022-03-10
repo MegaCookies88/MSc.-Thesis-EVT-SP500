@@ -69,7 +69,7 @@ jpeg(
   width = size, height = size, quality = 100, res = 100
 )
 
-par(mfrow=c(3,4), pty="s")
+par(mfrow=c(3,4), pty="s", mar=rep(6,4))
 
 for (i in c(6)){
   for (j in seq(1,11)){
@@ -79,7 +79,7 @@ for (i in c(6)){
         ll[,c(i,j)], which=1,
         main1=paste(sectors[i],sectors[j],sep="/"), 
         xlab="Quantile", ylab1="Chi / Chi Bar",
-        col=c1, cicol=c1, ylim1=c(0,1), lwd=2, cex.main=2
+        col=c1, cicol=c1, ylim1=c(0,1), lwd=2, cex.main=2.5, cex.lab=2, cex.axis=2
       )
       
       par(new=TRUE)
