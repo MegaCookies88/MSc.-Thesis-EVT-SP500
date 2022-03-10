@@ -1,0 +1,130 @@
+---
+title: "Standard Frechet Scale Transformation"
+author: "Mongi Nouira"
+output: github_document
+---
+
+```{r, include=FALSE}
+library(htmltools)
+
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+knitr::opts_chunk$set(
+  echo=FALSE, cache=TRUE, imgcenter=TRUE, 
+  fig.align="center", dpi=150, fig.width=7
+)
+
+library("ismev")
+library("evd")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+c3 = "#00CC96"
+```
+
+```{r}
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+ll$Date = df$Date[-1]
+
+ll = ll[,c(6,7)]
+```
+
+```{r}
+q1 = quantile(ll[,1],0.95)
+q2 = quantile(ll[,2],0.95)
+
+ell = -1/log(apply(ll,2,rank)/(nrow(ll)+1))
+eq1 = quantile(ell[,1],0.95)
+eq2 = quantile(ell[,2],0.95)
+
+par(pty="s", mfrow=c(1,2))
+
+plot(ll, main="Original Data", xlim=c(-20,20), ylim=c(-20,20))
+abline(v=q1, col=c2)
+abline(h=q2, col=c2)
+
+plot(ell, log="xy", main="Empirical Transformation")
+abline(v=eq1, col=c2, untf=TRUE)
+abline(h=eq2, col=c2, untf=TRUE)
+```
+
+```{r}
+# Model Threshold Excess GPD
+u1 = 2
+u2 = 2
+
+fit1 = gpd.fit(ll[,1], threshold=u1, npy=251, show=FALSE)
+fit2 = gpd.fit(ll[,2], threshold=u2, npy=251, show=FALSE)
+
+fst = function(x,r,sc,sh,u) -1/log(1-r*(1+sh*(x-u)/sc)^(-1/sh))
+
+fst_correct = function (x,xe,r,sc,sh,u){
+  if(x>u){
+    r = -1/log(1-r*(1+sh*(x-u)/sc)^(-1/sh))
+  }else{
+    r = xe
+  }
+  r
+}
+
+# Transformation
+pll = cbind(
+  mapply(function(x,xe) fst_correct(x,xe,fit1$rate,fit1$mle[1],fit1$mle[2],u1), ll[,1], ell[,1]),
+  mapply(function(x,xe) fst_correct(x,xe,fit2$rate,fit2$mle[1],fit2$mle[2],u2), ll[,2], ell[,2])
+)
+colnames(pll) = colnames(ll)
+```
+
+```{r}
+pq1 = quantile(pll[,1],0.95)
+pq2 = quantile(pll[,2],0.95)
+
+par(pty="s", mfrow=c(1,2))
+
+plot(ll, main="Original Data", xlim=c(-20,20), ylim=c(-20,20))
+abline(v=q1, col=c2)
+abline(h=q2, col=c2)
+
+plot(pll, log="xy", main="GPD/Empirical Transformation", xlim=c(0.1,1e5), ylim=c(0.1,1e5))
+abline(v=pq1, col=c2, untf=TRUE)
+abline(h=pq2, col=c2, untf=TRUE)
+```
+
+```{r}
+par(pty="s", mfrow=c(1,2))
+
+plot(ell, log="xy", main="Empirical Transformation", xlim=c(0.1,1e5), ylim=c(0.1,1e5))
+abline(v=eq1, col=c2, untf=TRUE)
+abline(h=eq2, col=c2, untf=TRUE)
+
+plot(pll, log="xy", main="GPD/Empirical Transformation", xlim=c(0.1,1e5), ylim=c(0.1,1e5))
+abline(v=pq1, col=c2, untf=TRUE)
+abline(h=pq2, col=c2, untf=TRUE)
+```
+
+```{r}
+par(pty="s", mfrow=c(1,3))
+
+plot(ll, main="Original Data", xlim=c(-20,20), ylim=c(-20,20))
+abline(v=q1, col=c2)
+abline(h=q2, col=c2)
+
+plot(ell, log="xy", main="Empirical Transformation", xlim=c(0.1,1e5), ylim=c(0.1,1e5))
+abline(v=eq1, col=c2, untf=TRUE)
+abline(h=eq2, col=c2, untf=TRUE)
+
+plot(pll, log="xy", main="GPD/Empirical Transformation", xlim=c(0.1,1e5), ylim=c(0.1,1e5))
+abline(v=pq1, col=c2, untf=TRUE)
+abline(h=pq2, col=c2, untf=TRUE)
+```
+
