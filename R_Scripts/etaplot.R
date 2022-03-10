@@ -74,11 +74,11 @@ for (i in c(6)){
       fla = apply(-1/log(ula),1,min)
       u_fla = quantile(fla, probs=c(0.025,0.975))
       
-      par(pty="s")
+      par(pty="s", mar=rep(6,4), cex.lab=2, cex.axis=2, lwd=2)
       tcplot(fla, u_fla, nt=25, pscale=TRUE, which=2, vci=FALSE, cilty=2, 
              type="l", ylim=c(0,1.2), ylab="Eta", xlab="Quantile", lwd=2)
       abline(h=1, col=c2, lty=3)
-      title(main=paste(sectors[i],sectors[j],sep="/"), cex.main=2)
+      title(main=paste(sectors[i],sectors[j],sep="/"), cex.main=2.5)
       
     }
   }
