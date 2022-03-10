@@ -2,7 +2,7 @@ GEV Univariate/Bivariate - EDA
 ================
 Mongi Nouira
 
-## Dependence between technology and energy sectors
+We analyze the dependence between the technology and energy sectors.
 
 <p align="center">
 

@@ -4,7 +4,7 @@ author: "Mongi Nouira"
 output: github_document
 ---
 
-## Dependence between technology and energy sectors
+We analyze the dependence between the technology and energy sectors.
 
 ```{r, include=FALSE}
 library(htmltools)
@@ -51,7 +51,7 @@ cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
 colnames(cml) = colnames(ll[,c(6,7)])
 
 par(mfrow=c(1,2), pty="s")
-plot(ll[,c(6,7)], main="Original And Maxima Data")
+plot(ll[,c(6,7)], main="Original And Maxima Data", xlim=c(-20,20), ylim=c(-20,20))
 points(cml, col=c1)
 
 ecml <- -1/log(apply(cml,2,rank)/(nrow(cml)+1))
@@ -72,13 +72,13 @@ par(pty="s")
 
 abvnonpar(data = cml, epmar = TRUE, method = pp, plot = TRUE, lty = 1, col=c1)
 abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 1, lty = 2)
-abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 3)
+abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 4)
 abvnonpar(data = cml, epmar = TRUE, method = cc, add = TRUE, lty = 1, col=c2)
 
 legend(
   "bottomright", 
   legend=c("Pickands","Deheuvels","Hall-Tajvidi","Caperaa-Fougeres-Genest"), 
-  col=c(c1,'black','black',c2), lty=c(1,2,3,1), cex=0.6
+  col=c(c1,'black','black',c2), lty=c(1,2,4,1), cex=0.6
 )
 
 title(main="Non-Parametric Estimation Of Dependence Function")
@@ -86,7 +86,7 @@ title(main="Non-Parametric Estimation Of Dependence Function")
 
 ```{r}
 par(pty="s")
-plot(ll[,c(6,7)], main="Quantile Curves")
+plot(ll[,c(6,7)], main="Quantile Curves", xlim=c(-20,20), ylim=c(-20,20))
 points(cml, col=c1)
 qcbvnonpar(c(0.95,0.99,0.995), data = cml, epmar = TRUE, mint = 30, add = TRUE, col = c2)
 ```
