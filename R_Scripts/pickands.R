@@ -81,7 +81,7 @@ for (i in c(6)){
       pp = "pickands"
       cc = "cfg"
       
-      par(pty="s", xaxt="n", yaxt="n", mar=rep(6,4), cex.lab=2, cex.axis=2, lwd=2)
+      par(pty="s", mar=rep(6,4), cex.lab=2, cex.axis=2, lwd=2)
       abvnonpar(data = cml, epmar = TRUE, method = pp, plot = TRUE, lty = 1, col=c1, lwd=2)
       abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 1, lty = 2, lwd=2)
       abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 4, lwd=2)
