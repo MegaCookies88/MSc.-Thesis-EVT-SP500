@@ -46,9 +46,21 @@ for (i in seq(1,11)){
           likelihood="poisson", std.err=FALSE
         )
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<11){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(pty="s")
         plot(fitbv, which=1, p=c(0.8,0.85,0.9,0.95), col=c2, main="",
-             xlim=c(0,20), ylim=c(0,20), lwd=2, tlty=3)
+             xlim=c(0,20), ylim=c(0,20), lwd=2, tlty=3, cex.axis=1.5)
         
       }
     }
