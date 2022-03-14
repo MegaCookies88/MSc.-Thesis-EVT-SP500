@@ -1,0 +1,134 @@
+---
+title: "Extremal Dependence : Chi Network"
+author: "Mongi Nouira"
+output: github_document
+---
+
+```{r, include=FALSE}
+library(htmltools)
+
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+knitr::opts_chunk$set(
+  echo=FALSE, cache=FALSE, imgcenter=TRUE, 
+  fig.align="center", dpi=150, fig.width=8, fig.height=8
+)
+
+library("network")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+c3 = "#00CC96"
+c4 = "#AB63FA"
+c5 = "#FECB52"
+```
+
+```{r}
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+# Data
+ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+ll$Date = df$Date[-1]
+
+# Sectors
+sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
+sectors = as.vector(sectors)
+```
+
+```{r}
+chi = function(x,y){
+  
+  n = 25*201
+  z1 = tapply(x[1:n], rep(1:201,each=25), max)
+  z2 = tapply(y[1:n], rep(1:201,each=25), max)
+  
+  g1 = ecdf(z1)
+  g2 = ecdf(z2)
+  
+  nu = 0.5*mean(abs(g1(z1)-g2(z2)))
+  chi = 2-(1+2*nu)/(1-2*nu)
+}
+
+c = chi(ll$S.P.Health.Care,ll$S.P.Real.Estate)
+```
+
+```{r}
+chi_matrix = data.frame(matrix(0,11,11), row.names=sectors)
+colnames(chi_matrix) = sectors
+
+for (i in seq(1,11)){
+  for (j in seq(1,11)){
+    chi_matrix[i,j] = chi(ll[,i],ll[,j])
+  }
+}
+diag(chi_matrix) = 0
+
+library(RColorBrewer)
+heatmap(as.matrix(chi_matrix), 
+        cexRow=0.8, cexCol=0.8, margins=c(10,10),
+        col=colorRampPalette(brewer.pal(8,"Blues"))(10))
+```
+
+
+```{r}
+chi_u  = 0.5
+nx_adj = chi_matrix>chi_u
+diag(nx_adj) = 0
+
+nx = network(nx_adj, directed=FALSE)
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, mode="circle", main="Chi Threshold = 0.5")
+```
+
+```{r}
+chi_u  = 0.6
+nx_adj = chi_matrix>chi_u
+diag(nx_adj) = 0
+
+nx = network(nx_adj, directed=FALSE)
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, main="Chi Threshold = 0.6")
+```
+
+```{r}
+chi_u  = 0.7
+nx_adj = chi_matrix>chi_u
+diag(nx_adj) = 0
+
+nx = network(nx_adj, directed=FALSE, weight=c(1,2))
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, main="Chi Threshold = 0.7")
+```
+
+```{r message=FALSE, warning=FALSE}
+library(igraph)
+
+l = matrix(c(
+  3,3,
+  1,4,
+  3,4,
+  2,2,
+  3,2,
+  3,5,
+  1,2,
+  2,5,
+  3,1,
+  2,4,
+  2,3
+),2,11)
+l = t(l)
+
+for (chi_u in c(0.7,0.6,0.5)){
+  nx_adj = chi_matrix>chi_u
+  diag(nx_adj) = 0
+  nx = graph_from_adjacency_matrix(nx_adj, weighted=TRUE, mode="undirected", diag=FALSE)
+  V(nx)$color = c(c3,"grey",c1,c2,c3,c1,c5,c2,c4,c2,c2)
+  plot(nx, layout=l, main=paste("Chi >",chi_u), edge.color="black")
+}
+```
+
