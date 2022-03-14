@@ -1,3 +1,5 @@
+## Mean Residual Life Plot
+
 library("ismev")
 
 # Data

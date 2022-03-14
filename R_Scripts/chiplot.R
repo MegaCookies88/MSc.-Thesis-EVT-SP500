@@ -1,3 +1,5 @@
+## Chi / Chi Bar Plot
+
 library("evd")
 
 # Color Map
