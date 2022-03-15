@@ -39,6 +39,8 @@ ll$Date = df$Date[-1]
 ll = ll[,c(6,7)]
 ```
 
+## Empirical Transformation
+
 ```{r}
 q1 = quantile(ll[,1],0.95)
 q2 = quantile(ll[,2],0.95)
@@ -58,6 +60,8 @@ abline(v=eq1, col=c2, untf=TRUE)
 abline(h=eq2, col=c2, untf=TRUE)
 ```
 
+## Mixed GPD/Empirical Transformation
+
 ```{r}
 # Model Threshold Excess GPD
 u1 = 2
@@ -66,11 +70,11 @@ u2 = 2
 fit1 = gpd.fit(ll[,1], threshold=u1, npy=251, show=FALSE)
 fit2 = gpd.fit(ll[,2], threshold=u2, npy=251, show=FALSE)
 
-fst = function(x,r,sc,sh,u) -1/log(1-r*(1+sh*(x-u)/sc)^(-1/sh))
+#fst = function(x,r,sc,sh,u) -1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))
 
 fst_correct = function (x,xe,r,sc,sh,u){
   if(x>u){
-    r = -1/log(1-r*(1+sh*(x-u)/sc)^(-1/sh))
+    r = -1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))
   }else{
     r = xe
   }
