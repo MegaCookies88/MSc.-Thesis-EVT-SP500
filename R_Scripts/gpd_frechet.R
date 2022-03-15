@@ -5,12 +5,18 @@ library("ismev")
 # Color Map
 c1 = "#636EFA"
 c2 = "#EF553B"
+c3 = "#00CC96"
+c4 = "#AB63FA"
+c5 = "#FECB52"
 
 # Data
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
+
+# Reorder Sectors
+ll = ll[,c(3,6,8,10,11,4,1,5,9,2,7)]
 
 # Sectors
 sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))

@@ -12,6 +12,9 @@ ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
 
+# Reorder Sectors
+ll = ll[,c(3,6,8,10,11,4,1,5,9,2,7)]
+
 # Sectors
 sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
 sectors = as.vector(sectors)
@@ -68,9 +71,9 @@ jpeg(
 
 par(mfrow=c(3,4), pty="s")
 
-for (i in c(6)){
+for (i in c(2)){
   for (j in seq(1,11)){
-    if (j!=6){
+    if (j!=2){
       
       ula = apply(ll[,c(i,j)],2,rank)/(nrow(ll)+1)
       fla = apply(-1/log(ula),1,min)
