@@ -16,7 +16,7 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 })
 
 knitr::opts_chunk$set(
-  echo=FALSE, cache=FALSE, imgcenter=TRUE, 
+  echo=FALSE, cache=FALSE, imgcenter=TRUE,
   fig.align="center", dpi=150, fig.width=8, fig.height=8
 )
 
@@ -84,7 +84,8 @@ nx_adj = chi_matrix>chi_u
 diag(nx_adj) = 0
 
 nx = network(nx_adj, directed=FALSE)
-plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, mode="circle", main="Chi Threshold = 0.5")
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, mode="circle", 
+     main="Chi Threshold = 0.5")
 ```
 
 ```{r}
@@ -93,7 +94,8 @@ nx_adj = chi_matrix>chi_u
 diag(nx_adj) = 0
 
 nx = network(nx_adj, directed=FALSE)
-plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, main="Chi Threshold = 0.6")
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, 
+     main="Chi Threshold = 0.6")
 ```
 
 ```{r}
@@ -102,7 +104,8 @@ nx_adj = chi_matrix>chi_u
 diag(nx_adj) = 0
 
 nx = network(nx_adj, directed=FALSE, weight=c(1,2))
-plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, main="Chi Threshold = 0.7")
+plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE, 
+     main="Chi Threshold = 0.7")
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -111,10 +114,10 @@ library(igraph)
 l = matrix(c(
   3,3,
   1,4,
-  3,4,
+  3,5,
   2,2,
   3,2,
-  3,5,
+  3,4,
   1,2,
   2,5,
   3,1,
