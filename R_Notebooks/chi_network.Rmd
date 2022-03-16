@@ -56,8 +56,6 @@ chi = function(x,y){
   nu = 0.5*mean(abs(g1(z1)-g2(z2)))
   chi = 2-(1+2*nu)/(1-2*nu)
 }
-
-c = chi(ll$S.P.Health.Care,ll$S.P.Real.Estate)
 ```
 
 ```{r}
