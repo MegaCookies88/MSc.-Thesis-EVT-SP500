@@ -45,13 +45,13 @@ ll$Date = df$Date[-1]
 We start by transforming the data into componentwise block maxima data by taking the maximum of groups of 25 observations. This produces 201 maxima observations.
 
 ```{r}
-cml = ll[1:5025,c(6,7)]
+cml = ll[1:5025,c(2,11)]
 xx = rep(1:201, each=25)
 cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
-colnames(cml) = colnames(ll[,c(6,7)])
+colnames(cml) = colnames(ll[,c(2,11)])
 
 par(mfrow=c(1,2), pty="s")
-plot(ll[,c(6,7)], main="Original And Maxima Data", xlim=c(-20,20), ylim=c(-20,20))
+plot(ll[,c(2,11)], main="Original And Maxima Data", xlim=c(-20,20), ylim=c(-20,20))
 points(cml, col=c1)
 
 ecml <- -1/log(apply(cml,2,rank)/(nrow(cml)+1))
@@ -86,7 +86,7 @@ title(main="Non-Parametric Estimation Of Dependence Function")
 
 ```{r}
 par(pty="s")
-plot(ll[,c(6,7)], main="Quantile Curves", xlim=c(-20,20), ylim=c(-20,20))
+plot(ll[,c(2,11)], main="Quantile Curves", xlim=c(-20,20), ylim=c(-20,20))
 points(cml, col=c1)
 qcbvnonpar(c(0.95,0.99,0.995), data = cml, epmar = TRUE, mint = 30, add = TRUE, col = c2)
 ```

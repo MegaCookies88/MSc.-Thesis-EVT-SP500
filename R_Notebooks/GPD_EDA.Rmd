@@ -125,14 +125,14 @@ Second, we look at the chi plots with 95% confidence intervals. The interpretati
 ```{r}
 par(pty="s")
 evd::chiplot(
-  ll[,c(6,7)], which=1, 
+  ll[,c(2,11)], which=1, 
   main1="Technology/Energy", 
   xlab="Quantile", ylab1="Chi / Chi Bar",
   ylim1=c(0,1), col=c1, cicol=c1, lwd=2
 )
 par(new=TRUE)
 evd::chiplot(
-  ll[,c(6,7)], which=2, 
+  ll[,c(2,11)], which=2, 
   main2="", xlab="", ylab2="", 
   ylim2=c(0,1), col=c2, cicol=c2, lwd=2
 )
@@ -143,7 +143,7 @@ legend("bottomright", c("Chi","Chi Bar"), col=c(c1,c2), cex=0.8, fill=c(c1,c2))
 Another approach is to fit a univariate GPD model to the variable $T=\min{\{X_1,X_2\}}$ then the shape parameter provides an estimation of the coefficient of tail dependence $\eta$.
 
 ```{r}
-ula = apply(ll[,c(6,7)],2,rank)/(nrow(ll)+1)
+ula = apply(ll[,c(2,11)],2,rank)/(nrow(ll)+1)
 fla = apply(-1/log(ula),1,min)
 u_fla = quantile(fla, probs=c(0.025,0.975))
 
@@ -158,7 +158,7 @@ title(main="Technology/Energy")
 Finally, we fit the logistic bivariate extreme value distribution for the exceedances over the threshold. We use the function "evd::fbvpot" and specifying the threshold u=2. Maximum-likelihood Fitting of Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 ```{r}
-fitbv <- fbvpot(ll[,c(6,7)], threshold=c(2,2), model="log", likelihood="poisson", std.err=FALSE)
+fitbv <- fbvpot(ll[,c(2,11)], threshold=c(2,2), model="log", likelihood="poisson", std.err=FALSE)
 
 par(mfrow=c(1,2), pty="s", oma=c(0,0,4,0))
 plot(fitbv, which=c(1,3), col=c2, xlim=c(0,20), ylim=c(0,20), tlty=3)

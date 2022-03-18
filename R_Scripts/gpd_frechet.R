@@ -15,9 +15,6 @@ ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
 
-# Reorder Sectors
-ll = ll[,c(3,6,8,10,11,4,1,5,9,2,7)]
-
 # Sectors
 sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
 sectors = as.vector(sectors)

@@ -36,7 +36,7 @@ ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
 
-ll = ll[,c(6,7)]
+ll = ll[,c(2,11)]
 ```
 
 ## Empirical Transformation

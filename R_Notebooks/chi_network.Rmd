@@ -46,9 +46,9 @@ sectors = as.vector(sectors)
 ```{r}
 chi = function(x,y){
   
-  n = 25*201
-  z1 = tapply(x[1:n], rep(1:201,each=25), max)
-  z2 = tapply(y[1:n], rep(1:201,each=25), max)
+  n = 25*202
+  z1 = tapply(x[1:n], rep(1:202,each=25), max)
+  z2 = tapply(y[1:n], rep(1:202,each=25), max)
   
   g1 = ecdf(z1)
   g2 = ecdf(z2)
@@ -106,30 +106,4 @@ plot(nx, vertex.cex=1, label.cex=0.8, displaylabels=TRUE, boxed.labels=FALSE,
      main="Chi Threshold = 0.7")
 ```
 
-```{r message=FALSE, warning=FALSE}
-library(igraph)
-
-l = matrix(c(
-  3,3,
-  1,4,
-  3,5,
-  2,2,
-  3,2,
-  3,4,
-  1,2,
-  2,5,
-  3,1,
-  2,4,
-  2,3
-),2,11)
-l = t(l)
-
-for (chi_u in c(0.7,0.6,0.5)){
-  nx_adj = chi_matrix>chi_u
-  diag(nx_adj) = 0
-  nx = graph_from_adjacency_matrix(nx_adj, weighted=TRUE, mode="undirected", diag=FALSE)
-  V(nx)$color = c(c3,"grey",c1,c2,c3,c1,c5,c2,c4,c2,c2)
-  plot(nx, layout=l, main=paste("Chi >",chi_u), edge.color="black")
-}
-```
 
