@@ -34,7 +34,7 @@ Using the univariate Generalized Pareto Distribution for EDA (Threshold selectio
 ```{r}
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
-ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = -100*sapply(df[seq(3,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
 #ll = apply(ll, c(1,2), function(x) max(x,0))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]

@@ -34,7 +34,7 @@ c5 = "#FECB52"
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
 # Data
-ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = -100*sapply(df[seq(3,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
 

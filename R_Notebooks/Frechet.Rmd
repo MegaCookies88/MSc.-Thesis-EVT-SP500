@@ -32,11 +32,11 @@ c3 = "#00CC96"
 ```{r}
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
-ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
 ll$Date = df$Date[-1]
 
-ll = ll[,c(2,11)]
+ll = ll[,c(3,12)]
 ```
 
 ## Empirical Transformation
@@ -51,6 +51,7 @@ eq2 = quantile(ell[,2],0.95)
 
 par(pty="s", mfrow=c(1,2))
 
+# col=sapply(ll[,1]>2 & ll[,2]>2, function(x) if (x==TRUE) c1 else "black")
 plot(ll, main="Original Data", xlim=c(-20,20), ylim=c(-20,20))
 abline(v=q1, col=c2)
 abline(h=q2, col=c2)

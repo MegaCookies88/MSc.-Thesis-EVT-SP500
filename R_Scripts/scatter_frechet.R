@@ -1,21 +1,32 @@
 ## Transformation To Frechet Scale Plot
 
+library(RColorBrewer)
+
 # Color Map
 c1 = "#636EFA"
-c2 = "#EF553B"
-c3 = "#00CC96"
-c4 = "#AB63FA"
-c5 = "#FECB52"
+c1 = "black"
+pal = brewer.pal(10,"RdYlGn")
 
 # Data
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
-ll = -100*sapply(df[seq(2,12)], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
-ll$Date = df$Date[-1]
 
 # Sectors
-sectors = sapply(colnames(ll)[1:11], function(x) substring(x,5))
+sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
 sectors = as.vector(sectors)
+
+# Chi Estimation
+chi_estimate = function(x,y){
+  n = 25*202
+  z1 = tapply(x[1:n], rep(1:202,each=25), max)
+  z2 = tapply(y[1:n], rep(1:202,each=25), max)
+  g1 = ecdf(z1)
+  g2 = ecdf(z2)
+  nu = 0.5*mean(abs(g1(z1)-g2(z2)))
+  chi = 2-(1+2*nu)/(1-2*nu)
+  chi
+}
 
 # Output Parameters
 size = 3000
@@ -26,10 +37,10 @@ jpeg(
   width = size, height = size, quality = 100, res = 100
 )
 
-par(mfrow=c(11,11), pty="s", mar=c(0,0,0,0), oma=c(4,4,0,0))
+par(mfrow=c(12,12), pty="s", mar=c(0,0,0,0), oma=c(4,4,0,0))
 
-for (i in seq(1,11)){
-  for (j in seq(1,11)){
+for (i in seq(1,12)){
+  for (j in seq(1,12)){
     
     if (j>i){
       plot.new()
@@ -42,7 +53,7 @@ for (i in seq(1,11)){
              cex=3, font=2, col=c1, srt=0)
       } else{
         
-        if (i<11){
+        if (i<12){
           par(xaxt="n")
         } else{
           par(xaxt="s")
@@ -54,9 +65,12 @@ for (i in seq(1,11)){
           par(yaxt="s")
         }
         
+        chi = chi_estimate(ll[,i],ll[,j])
+        
         par(pty="s")
         plot(-1/log(apply(ll[,c(i,j)],2,rank)/(nrow(ll)+1)), log="xy",
-             xlim=c(0.1,1e4), ylim=c(0.1,1e4), lwd=2, cex.axis=1.5)
+             xlim=c(0.1,1e4), ylim=c(0.1,1e4), lwd=2, cex.axis=1.5,
+             col=pal[1+as.integer(10*chi)])
         
       }
     }
