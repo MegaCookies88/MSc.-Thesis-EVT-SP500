@@ -42,10 +42,10 @@ for (i in seq(1,12)){
         
         fitbv <- fbvpot(
           ll[,c(i,j)], threshold=c(2,2), model="log", 
-          likelihood="poisson", std.err=FALSE
+          likelihood="censored", std.err=FALSE
         )
         
-        if (i<11){
+        if (i<12){
           par(xaxt="n")
         } else{
           par(xaxt="s")
