@@ -47,7 +47,7 @@ for (i in seq(1,12)){
         par(pty="s", xaxt="n", yaxt="n")
         tcplot(fla, u_fla, nt=25, pscale=TRUE, which=2, vci=FALSE, cilty=2, 
                type="l", ylim=c(0.5,1.2), ylab="", xlab="", lwd=2)
-        abline(h=1, col=c2, lty=3)
+        abline(h=1, col=c2, lty=3, lwd=2)
         axis(side=1, labels = FALSE)
         axis(side=2, labels = FALSE)
         
