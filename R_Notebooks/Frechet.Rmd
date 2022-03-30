@@ -4,6 +4,8 @@ author: "Mongi Nouira"
 output: github_document
 ---
 
+We present two approaches to transform the marginals to the Frechet scale. 
+
 ```{r, include=FALSE}
 library(htmltools)
 
@@ -104,6 +106,8 @@ plot(pll, log="xy", main="GPD/Empirical Transformation", xlim=c(0.1,1e5), ylim=c
 abline(v=pq1, col=c2, untf=TRUE)
 abline(h=pq2, col=c2, untf=TRUE)
 ```
+
+## Comparison
 
 ```{r}
 par(pty="s", mfrow=c(1,2))
