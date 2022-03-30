@@ -68,7 +68,7 @@ for (i in seq(1,12)){
         chi = chi_estimate(ll[,i],ll[,j])
         
         par(pty="s")
-        plot(-1/log(apply(ll[,c(i,j)],2,rank)/(nrow(ll)+1)), log="xy",
+        plot(-1/log(apply(ll[,c(j,i)],2,rank)/(nrow(ll)+1)), log="xy",
              xlim=c(0.1,1e4), ylim=c(0.1,1e4), lwd=2, cex.axis=1.5,
              col=pal[1+as.integer(10*chi)])
         

@@ -40,10 +40,10 @@ for (i in seq(1,12)){
              cex=3, font=2, col="black", srt=0)
       } else{
         
-        cml = ll[1:5025,c(i,j)]
+        cml = ll[1:5025,c(j,i)]
         xx = rep(1:201, each=25)
         cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
-        colnames(cml) = colnames(ll[,c(i,j)])
+        colnames(cml) = colnames(ll[,c(j,i)])
         
         pp = "pickands"
         cc = "cfg"

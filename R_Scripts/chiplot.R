@@ -43,7 +43,7 @@ for (i in seq(1,12)){
         par(pty="s", xaxt="n", yaxt="n")
         
         evd::chiplot(
-          ll[,c(i,j)], which=1, 
+          ll[,c(j,i)], which=1, 
           main1="", xlab="Quantile", ylab1="Chi / Chi Bar", ylim1=c(0,1),
           col=c1, cicol=c1, lwd=2, cex=2
         )
@@ -51,7 +51,7 @@ for (i in seq(1,12)){
         par(new=TRUE)
         
         evd::chiplot(
-          ll[,c(i,j)], which=2, 
+          ll[,c(j,i)], which=2, 
           main2="", xlab="", ylab2="", ylim2=c(0,1),
           col=c2, cicol=c2, lwd=2, cex=2
         )

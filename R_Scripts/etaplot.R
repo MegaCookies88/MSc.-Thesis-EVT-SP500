@@ -40,7 +40,7 @@ for (i in seq(1,12)){
              cex=3, font=2, col=c1, srt=0)
       } else{
         
-        ula = apply(ll[,c(i,j)],2,rank)/(nrow(ll)+1)
+        ula = apply(ll[,c(j,i)],2,rank)/(nrow(ll)+1)
         fla = apply(-1/log(ula),1,min)
         u_fla = quantile(fla, probs=c(0.025,0.975))
         

@@ -41,7 +41,7 @@ for (i in seq(1,12)){
       } else{
         
         fitbv <- fbvpot(
-          ll[,c(i,j)], threshold=c(2,2), model="log", 
+          ll[,c(j,i)], threshold=c(2,2), model="log", 
           likelihood="censored", std.err=FALSE
         )
         

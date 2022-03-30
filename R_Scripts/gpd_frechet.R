@@ -80,15 +80,15 @@ for (i in seq(1,12)){
           par(yaxt="s")
         }
         
-        ell = -1/log(apply(ll[,c(i,j)],2,rank)/(nrow(ll)+1))
-        fit1 = ismev::gpd.fit(ll[,i], threshold=u1, npy=251, show=FALSE)
-        fit2 = ismev::gpd.fit(ll[,j], threshold=u2, npy=251, show=FALSE)
+        ell = -1/log(apply(ll[,c(j,i)],2,rank)/(nrow(ll)+1))
+        fit1 = ismev::gpd.fit(ll[,j], threshold=u1, npy=251, show=FALSE)
+        fit2 = ismev::gpd.fit(ll[,i], threshold=u2, npy=251, show=FALSE)
         
         pll = cbind(
-          mapply(function(x,xe) fst_correct(x,xe,fit1$rate,fit1$mle[1],fit1$mle[2],u1), ll[,i], ell[,1]),
-          mapply(function(x,xe) fst_correct(x,xe,fit2$rate,fit2$mle[1],fit2$mle[2],u2), ll[,j], ell[,2])
+          mapply(function(x,xe) fst_correct(x,xe,fit1$rate,fit1$mle[1],fit1$mle[2],u1), ll[,j], ell[,1]),
+          mapply(function(x,xe) fst_correct(x,xe,fit2$rate,fit2$mle[1],fit2$mle[2],u2), ll[,i], ell[,2])
         )
-        colnames(pll) = colnames(ll[,c(i,j)])
+        colnames(pll) = colnames(ll[,c(j,i)])
         
         chi = chi_estimate(ll[,i],ll[,j])
         
