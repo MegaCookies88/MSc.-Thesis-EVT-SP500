@@ -21,6 +21,8 @@ knitr::opts_chunk$set(
 )
 
 library("network")
+library("gplots")
+library(RColorBrewer)
 
 # Color Map
 c1 = "#636EFA"
@@ -69,10 +71,17 @@ for (i in seq(1,11)){
 }
 diag(chi_matrix) = 0
 
-library(RColorBrewer)
-heatmap(as.matrix(chi_matrix), 
-        cexRow=0.8, cexCol=0.8, margins=c(10,10),
-        col=colorRampPalette(brewer.pal(8,"Blues"))(10))
+pal = colorRampPalette(brewer.pal(8,"Blues"))(10)
+
+heatmap.2(
+  as.matrix(chi_matrix), 
+  Rowv=NA, Colv=NA, dendrogram="none",
+  col=pal, density.info="none", trace="none",
+  cexCol=1, cexRow=1, srtCol=45, offsetCol=0,
+  margins=c(12,12), keysize=1.5,
+  labCol=sectors, labRow=sectors
+)
+
 ```
 
 

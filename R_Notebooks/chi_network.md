@@ -33,9 +33,3 @@ Mongi Nouira
 <img src="chi_network_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 </p>
-
-<p align="center">
-
-<img src="chi_network_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /><img src="chi_network_files/figure-gfm/unnamed-chunk-8-2.png" style="display: block; margin: auto;" /><img src="chi_network_files/figure-gfm/unnamed-chunk-8-3.png" style="display: block; margin: auto;" />
-
-</p>
