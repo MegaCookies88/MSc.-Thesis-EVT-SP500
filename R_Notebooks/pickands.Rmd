@@ -1,0 +1,158 @@
+---
+title: "Dependence Functions Test"
+author: "Mongi Nouira"
+output: github_document
+---
+
+We look at the dependence function by Pickands and other variations. We use a non-parametric estimation of dependence function.
+
+```{r, include=FALSE}
+library(htmltools)
+
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+knitr::opts_chunk$set(
+  echo=FALSE, cache=FALSE, imgcenter=TRUE, 
+  fig.align="center", dpi=150, fig.width=7
+)
+
+library("evd")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+c3 = "#00CC96"
+```
+
+```{r}
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+
+sectors = sapply(colnames(ll)[1:ncol(ll)], function(x) substring(x,5))
+sectors = as.vector(sectors)
+```
+
+## Dependence Functions Variations
+We use the component wise block maxima approach.
+
+```{r}
+s1 = 1
+s2 = 4
+
+cml = ll[1:5025,c(s1,s2)]
+xx = rep(1:201, each=25)
+cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
+colnames(cml) = colnames(ll[,c(2,11)])
+
+pp = "pickands"
+cc = "cfg"
+
+par(pty="s")
+
+abvnonpar(data = cml, epmar = TRUE, method = pp, plot = TRUE, lty = 1, col=c1, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 1, lty = 2, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 4, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = cc, add = TRUE, lty = 1, col=c2, lwd=2)
+
+legend(
+  "bottomright",
+  legend=c(pp,"Deheuvels","Hall-Tajvidi",cc), 
+  col=c(c1,'black','black',c2), lty=c(1,2,4,1), cex=0.8
+)
+
+title(main=paste(sectors[s1],sectors[s2],sep="/"))
+```
+
+```{r}
+s1 = 3
+s2 = 12
+
+cml = ll[1:5025,c(s1,s2)]
+xx = rep(1:201, each=25)
+cml = cbind(tapply(cml[,1], xx, max), tapply(cml[,2], xx, max))
+colnames(cml) = colnames(ll[,c(2,11)])
+
+pp = "pickands"
+cc = "cfg"
+
+par(pty="s")
+
+abvnonpar(data = cml, epmar = TRUE, method = pp, plot = TRUE, lty = 1, col=c1, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 1, lty = 2, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 4, lwd=2)
+abvnonpar(data = cml, epmar = TRUE, method = cc, add = TRUE, lty = 1, col=c2, lwd=2)
+
+legend(
+  "bottomright",
+  legend=c(pp,"Deheuvels","Hall-Tajvidi",cc), 
+  col=c(c1,'black','black',c2), lty=c(1,2,4,1), cex=0.8
+)
+
+title(main=paste(sectors[s1],sectors[s2],sep="/"))
+```
+
+## Threshold Effect
+We use the threshold exceedances approach. We compute the dependence function using the observations that exceeds both thresholds.
+
+```{r}
+s1 = 1
+s2 = 4
+
+bll = ll[,c(s1,s2)]
+
+par(pty="s")
+
+abvnonpar(data = bll[bll[,1]>1.5 & bll[,2]>1.5,], 
+          epmar=TRUE, method=cc, plot=TRUE, lty=1, col=c1, lwd=2)
+abvnonpar(data = bll[bll[,1]>2 & bll[,2]>2,], 
+          epmar=TRUE, method=cc, add=TRUE, lty=1, col=c2, lwd=2)
+abvnonpar(data = bll[bll[,1]>2.5 & bll[,2]>2.5,], 
+          epmar=TRUE, method=cc, add=TRUE, lty=1, col=c3, lwd=2)
+
+legend(
+  "bottomright",
+  legend=c("1.5","2","2.5"), 
+  col=c(c1,c2,c3), lty=c(1,1,1), cex=0.8
+)
+
+title(main=paste(sectors[s1],sectors[s2],sep="/"))
+```
+
+```{r}
+s1 = 3
+s2 = 12
+
+bll = ll[,c(s1,s2)]
+
+par(pty="s")
+
+abvnonpar(data = bll[bll[,1]>1.5 & bll[,2]>1.5,], 
+          epmar=TRUE, method=cc, plot=TRUE, lty=1, col=c1, lwd=2)
+abvnonpar(data = bll[bll[,1]>2 & bll[,2]>2,], 
+          epmar=TRUE, method=cc, add=TRUE, lty=1, col=c2, lwd=2)
+abvnonpar(data = bll[bll[,1]>2.5 & bll[,2]>2.5,], 
+          epmar=TRUE, method=cc, add=TRUE, lty=1, col=c3, lwd=2)
+
+legend(
+  "bottomright",
+  legend=c("1.5","2","2.5"), 
+  col=c(c1,c2,c3), lty=c(1,1,1), cex=0.8
+)
+
+title(main=paste(sectors[s1],sectors[s2],sep="/"))
+```
+
+
+
+
+
+
+
