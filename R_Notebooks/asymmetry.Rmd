@@ -1,0 +1,93 @@
+---
+title: "Coefficient Of Extremal Asymmetry"
+author: "Mongi Nouira"
+output: github_document
+---
+
+```{r, include=FALSE}
+library(htmltools)
+
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+knitr::opts_chunk$set(
+  echo=FALSE, cache=FALSE, imgcenter=TRUE, 
+  fig.align="center", dpi=150, fig.width=7
+)
+
+library("evd")
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+c3 = "#00CC96"
+```
+
+```{r}
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+
+# Sectors
+sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
+sectors = as.vector(sectors)
+```
+
+```{r}
+rho = function(c,q){
+  n = nrow(c)
+  sc = apply(c,2,rank)/(n+1)
+  u = sc[,1]
+  v = sc[,2]
+  r = (sum(v>u & u>q) - sum(v<u & v>q)) / (sum(v>u & u>q) + sum(v<u & v>q))
+  r
+}
+```
+
+```{r}
+q = seq(0.01,0.99,0.01)
+rho_q = sapply(q, function(t) rho(ll[,c(1,2)],t))
+
+plot(q, rho_q, type="l")
+```
+
+```{r}
+t = 0.95
+
+phi_mx = matrix(0, nrow=12, ncol=12, dimnames=list(sectors,sectors))
+
+for (i in seq(1,12)){
+  for (j in seq(1,12)){
+    
+    if (i!=j){
+      phi = rho(ll[,c(i,j)],t)
+    } else{
+      phi = NA
+    }
+    
+    phi_mx[i,j] = phi
+    
+  }
+}
+```
+
+```{r message=FALSE, warning=FALSE}
+library("gplots")
+library("RColorBrewer")
+pal = brewer.pal(10,"RdYlGn")
+
+heatmap.2(
+  phi_mx, Rowv=NA, Colv=NA, dendrogram="none",
+  col=pal, density.info="none", trace="none",
+  cexCol=1, cexRow=1, srtCol=45, offsetCol=0,
+  margins=c(8,15), keysize=1.5,
+  labCol=sectors, labRow=sectors
+)
+```
+
