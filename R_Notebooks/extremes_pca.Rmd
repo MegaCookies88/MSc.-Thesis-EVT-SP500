@@ -1,0 +1,141 @@
+---
+title: "Extremes Dependence Decomposition"
+author: "Mongi Nouira"
+output: github_document
+---
+
+```{r, include=FALSE}
+library(htmltools)
+
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+
+rmd_filename <- stringr::str_remove(knitr::current_input(), "\\.Rmd")
+
+knitr::opts_chunk$set(
+  echo=FALSE, cache=FALSE, imgcenter=TRUE,
+  fig.align="center", dpi=150, fig.width=8, fig.height=8,
+  fig.path = stringr::str_c(file.path("cache", rmd_filename), "/")
+)
+
+# Color Map
+c1 = "#636EFA"
+c2 = "#EF553B"
+c3 = "#00CC96"
+c4 = "#AB63FA"
+c5 = "#FECB52"
+```
+
+```{r}
+df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
+
+# Data
+ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = data.frame(ll)
+#ll$Date = df$Date[-1]
+
+# Sectors
+sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
+sectors = as.vector(sectors)
+```
+
+```{r}
+# Keep Positive Losses Only
+ll = apply(ll, c(1,2), function(x) max(x,0))
+
+# Plot 0
+par(pty="s")
+pairs(ll[,seq(1,3)], upper.panel=NULL)
+
+# Bijection 
+ll = apply(ll, c(1,2), function(x) log(1+exp(x)))
+
+# Plot 1
+par(pty="s")
+pairs(ll[,seq(1,3)], upper.panel=NULL)
+
+# Hill Estimator - Marginal Transform
+u = 2
+a = log(1+exp(2))
+ll = apply(ll, 2, function(x) (sd(x)^(-1/2))*(x^(a/2)))
+
+# Plot 2
+par(pty="s")
+pairs(ll[,seq(1,3)], upper.panel=NULL)
+```
+
+```{r}
+# New Coordinates
+r = apply(ll, 1, function(x) norm(as.matrix(x), type="2"))
+w = ll/r
+
+n = length(r)
+r0 = quantile(r,0.95)
+nr0 = sum(r>r0)
+
+m = (r0^2)*nr0/n
+
+W = as.matrix(w[r>r0,])
+
+# Tail Wise Dependence Matrix
+S = (m/nr0) * t(W)%*%W
+```
+
+```{r message=FALSE, warning=FALSE}
+ED = eigen(S)
+
+e = ED$values
+u = ED$vectors
+
+# sign change : describing losses better
+u[,1] = -u[,1]
+
+plot(e, type="l", xlab="Index", ylab="Eigen Value")
+
+library("gplots")
+library("RColorBrewer")
+pal = brewer.pal(10,"RdYlGn")
+
+heatmap.2(
+  u[,1:4], Rowv=NA, Colv=NA, dendrogram="none",
+  col=pal, density.info="none", trace="none",
+  cexCol=1, cexRow=1, srtCol=0,
+  margins=c(5,15), keysize=2,
+  labCol=c("u1","u2","u3","u4"), labRow=sectors)
+```
+
+```{r}
+dw = apply(w, 1, function(x) t(u[,1:3])%*%x)
+dw = t(dw)
+
+par(mfrow=c(3,1))
+plot(as.Date(df$Date[-1]), y=dw[,1], type="l", xlab="Date", ylab="w1")
+plot(as.Date(df$Date[-1]), y=dw[,2], type="l", xlab="Date", ylab="w2")
+plot(as.Date(df$Date[-1]), y=dw[,3], type="l", xlab="Date", ylab="w3")
+```
+
+```{r}
+dll = apply(ll, 1, function(x) t(u[,1:3])%*%x)
+dll = t(dll)
+
+par(mfrow=c(3,1))
+plot(as.Date(df$Date[-1]), y=dll[,1], type="l", xlab="Date", ylab="v1")
+plot(as.Date(df$Date[-1]), y=dll[,2], type="l", xlab="Date", ylab="v2")
+plot(as.Date(df$Date[-1]), y=dll[,3], type="l", xlab="Date", ylab="v3")
+```
+
+```{r}
+par(mfrow=c(1,3), pty="s")
+plot(dll[,c(1,2)], xlab="v1", ylab="v2")
+plot(dll[,c(1,3)], xlab="v1", ylab="v3")
+plot(dll[,c(2,3)], xlab="v2", ylab="v3")
+```
+
+
+
+
