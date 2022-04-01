@@ -16,7 +16,7 @@ maxima observations.
 
 <p align="center">
 
-<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="cache/GEV_EDA/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -27,13 +27,13 @@ function that also uses empirical estimation of the margins.
 
 <p align="center">
 
-<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="cache/GEV_EDA/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="cache/GEV_EDA/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -44,7 +44,7 @@ Bivariate Extreme Value Distributions models.
 
 <p align="center">
 
-<img src="GEV_EDA_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="cache/GEV_EDA/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
 

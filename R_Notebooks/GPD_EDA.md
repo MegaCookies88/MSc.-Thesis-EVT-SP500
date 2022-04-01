@@ -21,7 +21,7 @@ seems more appropriate with 367 exceedances.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -30,7 +30,7 @@ threshold. The selected threshold of 2 seems reasonable.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -43,28 +43,28 @@ following :
     ## [1] 2
     ## 
     ## $nexc
-    ## [1] 367
+    ## [1] 369
     ## 
     ## $conv
     ## [1] 0
     ## 
     ## $nllh
-    ## [1] 424.1191
+    ## [1] 425.9481
     ## 
     ## $mle
-    ## [1] 1.07588779 0.08239063
+    ## [1] 1.0740668 0.0828456
     ## 
     ## $rate
-    ## [1] 0.07274529
+    ## [1] 0.07288169
     ## 
     ## $se
-    ## [1] 0.07825049 0.05080156
+    ## [1] 0.07801314 0.05084159
 
 </p>
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -86,7 +86,7 @@ the axis.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -99,7 +99,7 @@ sectors.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -109,7 +109,7 @@ of the coefficient of tail dependence \(\eta\).
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -120,6 +120,6 @@ Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="GPD_EDA_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>

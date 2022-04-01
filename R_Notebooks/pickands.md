@@ -15,13 +15,13 @@ We use the component wise block maxima approach.
 
 <p align="center">
 
-<img src="pickands_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="cache/pickands/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="pickands_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="cache/pickands/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -32,12 +32,12 @@ function using the observations that exceeds both thresholds.
 
 <p align="center">
 
-<img src="pickands_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="cache/pickands/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 </p>
 
 <p align="center">
 
-<img src="pickands_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="cache/pickands/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
