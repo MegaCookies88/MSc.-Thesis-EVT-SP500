@@ -4,6 +4,8 @@ author: "Mongi Nouira"
 output: github_document
 ---
 
+We introduce a coefficient of extremal asymmetry which quantifies the level of asymmetry in the structure of dependence between two random variables at extreme levels.
+
 ```{r, include=FALSE}
 library(htmltools)
 
@@ -14,6 +16,11 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
     HTML("</p>")
   }
 })
+
+rmd_filename <- stringr::str_remove(knitr::current_input(), "\\.Rmd")
+knitr::opts_chunk$set(
+  fig.path = stringr::str_c(file.path("cache", rmd_filename), "/")
+)
 
 knitr::opts_chunk$set(
   echo=FALSE, cache=FALSE, imgcenter=TRUE, 
@@ -39,6 +46,10 @@ sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
 sectors = as.vector(sectors)
 ```
 
+## Extremal Symmetry - Examples
+
+The number $\rho$ reflects the tendency of one variable to be more extreme than the other, given that both variables are extreme. We are interested in the limit.
+
 ```{r}
 rho = function(c,q){
   n = nrow(c)
@@ -51,14 +62,39 @@ rho = function(c,q){
 ```
 
 ```{r}
-q = seq(0.01,0.99,0.01)
-rho_q = sapply(q, function(t) rho(ll[,c(1,2)],t))
+s1 = 1
+s2 = 4
 
-plot(q, rho_q, type="l")
+q = seq(0.01,0.99,0.01)
+rho_q = sapply(q, function(t) rho(ll[,c(s1,s2)],t))
+
+plot(
+  q, rho_q, type="l", xlab="q", ylab="rho",
+  xlim=c(0,1), ylim=c(-0.5,0.5),
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+abline(h=0, col=c2, lty=3)
 ```
+```{r}
+s1 = 11
+s2 = 12
+
+q = seq(0.01,0.99,0.01)
+rho_q = sapply(q, function(t) rho(ll[,c(s1,s2)],t))
+
+plot(
+  q, rho_q, type="l", xlab="q", ylab="rho",
+  xlim=c(0,1), ylim=c(-0.5,0.5),
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+abline(h=0, col=c2, lty=3)
+```
+## Extremal Symmetry - All Sector Pairs Matrix
+
+We look at the value for the 95% quantile which simply means using the threshold 0.95 to compute the coefficient.
 
 ```{r}
-t = 0.95
+q = 0.95
 
 phi_mx = matrix(0, nrow=12, ncol=12, dimnames=list(sectors,sectors))
 
@@ -66,7 +102,7 @@ for (i in seq(1,12)){
   for (j in seq(1,12)){
     
     if (i!=j){
-      phi = rho(ll[,c(i,j)],t)
+      phi = rho(ll[,c(i,j)],q)
     } else{
       phi = NA
     }
