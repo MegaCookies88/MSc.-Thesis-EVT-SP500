@@ -16,19 +16,25 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 })
 
 rmd_filename <- stringr::str_remove(knitr::current_input(), "\\.Rmd")
+knitr::opts_chunk$set(
+  fig.path = stringr::str_c(file.path("cache", rmd_filename), "/")
+)
 
 knitr::opts_chunk$set(
   echo=FALSE, cache=FALSE, imgcenter=TRUE,
-  fig.align="center", dpi=150, fig.width=8, fig.height=8,
-  fig.path = stringr::str_c(file.path("cache", rmd_filename), "/")
+  fig.align="center", dpi=150, fig.width=8, fig.height=6
 )
 
 # Color Map
 c1 = "#636EFA"
 c2 = "#EF553B"
 c3 = "#00CC96"
-c4 = "#AB63FA"
-c5 = "#FECB52"
+
+library("ismev")
+library("gplots")
+library("lattice")
+library("RColorBrewer")
+pal = brewer.pal(10,"RdYlGn")
 ```
 
 ```{r}
@@ -37,14 +43,14 @@ df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 # Data
 ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
 ll = data.frame(ll)
-#ll$Date = df$Date[-1]
 
 # Sectors
 sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
 sectors = as.vector(sectors)
+colnames(ll) = sectors
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 # Keep Positive Losses Only
 ll = apply(ll, c(1,2), function(x) max(x,0))
 
@@ -70,9 +76,39 @@ pairs(ll[,seq(1,3)], upper.panel=NULL)
 ```
 
 ```{r}
+# Keep Positive Losses Only
+ll = apply(ll, c(1,2), function(x) max(x,0))
+
+# Empirical/GPD transform
+fst_correct = function(x,xe,r,sc,sh,u){
+  if(x>u){-1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))} else{xe}
+}
+gpd_rescale = function(x,u){
+  fit = gpd.fit(x, threshold=u, npy=251, show=FALSE)
+  xe = -1/log(rank(x)/(length(x)+1))
+  z = mapply(
+    function(a,b) fst_correct(a,b,fit$rate,fit$mle[1],fit$mle[2],u), x, xe
+  )
+  z
+}
+
+sll = apply(ll, 2, function(x) gpd_rescale(x,2))
+```
+
+```{r}
+# Plot 1
+par(pty="s")
+pairs(ll[,seq(1,3)], upper.panel=NULL)
+
+# Plot 2
+par(pty="s")
+pairs(sll[,seq(1,3)], log="xy", upper.panel=NULL)
+```
+
+```{r}
 # New Coordinates
-r = apply(ll, 1, function(x) norm(as.matrix(x), type="2"))
-w = ll/r
+r = apply(sll, 1, function(x) norm(as.matrix(x), type="2"))
+w = sll/r
 
 n = length(r)
 r0 = quantile(r,0.95)
@@ -86,6 +122,14 @@ W = as.matrix(w[r>r0,])
 S = (m/nr0) * t(W)%*%W
 ```
 
+```{r}
+levelplot(
+  S, xlab="", ylab="", 
+  col.regions=colorRampPalette(brewer.pal(8, "Blues"))(25),
+  pretty=TRUE, scales=list(x=list(rot=45))
+)
+```
+
 ```{r message=FALSE, warning=FALSE}
 ED = eigen(S)
 
@@ -94,12 +138,9 @@ u = ED$vectors
 
 # sign change : describing losses better
 u[,1] = -u[,1]
+u[,2] = -u[,2]
 
 plot(e, type="l", xlab="Index", ylab="Eigen Value")
-
-library("gplots")
-library("RColorBrewer")
-pal = brewer.pal(10,"RdYlGn")
 
 heatmap.2(
   u[,1:4], Rowv=NA, Colv=NA, dendrogram="none",
@@ -130,12 +171,24 @@ plot(as.Date(df$Date[-1]), y=dll[,3], type="l", xlab="Date", ylab="v3")
 ```
 
 ```{r}
+par(mfrow=c(3,1))
+plot(as.Date(df$Date[-1]), y=dll[,1], ylim=c(-5,45), type="l", xlab="Date", ylab="v1")
+plot(as.Date(df$Date[-1]), y=dll[,2], ylim=c(-5,45), type="l", xlab="Date", ylab="v2")
+plot(as.Date(df$Date[-1]), y=dll[,3], ylim=c(-5,45), type="l", xlab="Date", ylab="v3")
+```
+
+```{r}
 par(mfrow=c(1,3), pty="s")
 plot(dll[,c(1,2)], xlab="v1", ylab="v2")
 plot(dll[,c(1,3)], xlab="v1", ylab="v3")
 plot(dll[,c(2,3)], xlab="v2", ylab="v3")
 ```
 
-
+```{r}
+par(mfrow=c(1,3), pty="s")
+plot(dll[,c(1,2)], xlim=c(-5,40), ylim=c(-5,40), xlab="v1", ylab="v2")
+plot(dll[,c(1,3)], xlim=c(-5,40), ylim=c(-5,40), xlab="v1", ylab="v3")
+plot(dll[,c(2,3)], xlim=c(-5,40), ylim=c(-5,40), xlab="v2", ylab="v3")
+```
 
 

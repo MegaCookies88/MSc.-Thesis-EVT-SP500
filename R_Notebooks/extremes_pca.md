@@ -8,12 +8,6 @@ Mongi Nouira
 
 <p align="center">
 
-<img src="cache/extremes_pca/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /><img src="cache/extremes_pca/unnamed-chunk-3-2.png" style="display: block; margin: auto;" /><img src="cache/extremes_pca/unnamed-chunk-3-3.png" style="display: block; margin: auto;" />
-
-</p>
-
-<p align="center">
-
 </p>
 
 <p align="center">
@@ -23,8 +17,6 @@ Mongi Nouira
 </p>
 
 <p align="center">
-
-<img src="cache/extremes_pca/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -36,6 +28,36 @@ Mongi Nouira
 
 <p align="center">
 
-<img src="cache/extremes_pca/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="cache/extremes_pca/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /><img src="cache/extremes_pca/unnamed-chunk-8-2.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/extremes_pca/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/extremes_pca/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/extremes_pca/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/extremes_pca/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/extremes_pca/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 </p>
