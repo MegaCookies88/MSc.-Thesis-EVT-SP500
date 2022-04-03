@@ -80,7 +80,7 @@ fit2 = gpd.fit(ll[,2], threshold=u2, npy=251, show=FALSE)
 
 #fst = function(x,r,sc,sh,u) -1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))
 
-fst_correct = function (x,xe,r,sc,sh,u){
+fst_correct = function(x,xe,r,sc,sh,u){
   if(x>u){
     r = -1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))
   }else{
