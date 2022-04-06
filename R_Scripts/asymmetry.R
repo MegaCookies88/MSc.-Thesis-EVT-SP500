@@ -16,12 +16,12 @@ ll = data.frame(ll)
 sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
 sectors = as.vector(sectors)
 
-# Extremal Asymmetry
+# Extremal Asymmetry - First > Second 
 rho = function(c,q){
   sc = apply(c,2,rank)/(nrow(c)+1)
   u = sc[,1]
   v = sc[,2]
-  r = (sum(v>u & u>q) - sum(v<u & v>q)) / (sum(v>u & u>q) + sum(v<u & v>q))
+  r = (sum(u>v & v>q) - sum(u<v & u>q)) / (sum(u>v & v>q) + sum(u<v & u>q))
   r
 }
 
