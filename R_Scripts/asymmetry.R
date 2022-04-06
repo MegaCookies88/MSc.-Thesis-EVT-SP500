@@ -21,7 +21,17 @@ rho = function(c,q){
   sc = apply(c,2,rank)/(nrow(c)+1)
   u = sc[,1]
   v = sc[,2]
-  r = (sum(u>v & v>q) - sum(u<v & u>q)) / (sum(u>v & v>q) + sum(u<v & u>q))
+  a = sum(u>v & v>q) - sum(u<v & u>q) 
+  b = sum(u>v & v>q) + sum(u<v & u>q)
+  if(b==0){r=0} else{r=a/b}
+  r
+}
+rho_nsc = function(c,u){
+  x = c[,1]
+  y = c[,2]
+  a = sum(x>y & y>u) - sum(x<y & x>u)
+  b = sum(x>y & y>u) + sum(x<y & x>u)
+  if(b==0){r=0} else{r=a/b}
   r
 }
 
@@ -50,12 +60,14 @@ for (i in seq(1,12)){
              cex=3, font=2, col=c1, srt=0)
       } else{
         
-        q = seq(0.01,0.99,0.01)
+        q = seq(0,0.99,0.01)
+        u = seq(0,10,0.25)
         rho_q = sapply(q, function(t) rho(ll[,c(j,i)],t))
+        #rho_u = sapply(u, function(t) rho_nsc(ll[,c(j,i)],t))
         
         par(pty="s", xaxt="n", yaxt="n")
-        plot(x=q, y=rho_q, type="l", xlim=c(0,1), ylim=c(-0.5,0.5), 
-             lwd=2, cex.axis=1.5)
+        plot(x=q, y=rho_q, type="l", ylim=c(-0.5,0.5), lwd=2, cex.axis=1.5)
+        #plot(x=u, y=rho_u, type="l", ylim=c(-1,1), lwd=2, cex.axis=1.5)
         abline(h=0, col=c2, lty=3, lwd=2)
         
       }
