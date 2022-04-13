@@ -1,6 +1,7 @@
 ## Coefficient Of Extremal Asymmetry
 
-library(RColorBrewer)
+library("RColorBrewer")
+library("boot")
 
 # Color Map
 c1 = "#636EFA"
@@ -34,6 +35,12 @@ rho_nsc = function(c,u){
   if(b==0){r=0} else{r=a/b}
   r
 }
+rho.ci = function(c,q){
+  boot.out = boot(c, function(t,idx) rho(t[idx,],q), R=500, parallel="multicore", ncpus=6)
+  ci = boot.ci(boot.out, conf=0.95, type="norm")
+  r = ci$normal
+  r[c(2,3)]
+}
 
 # Output Parameters
 size = 3000
@@ -65,15 +72,21 @@ for (i in seq(1,12)){
         rho_q = sapply(q, function(t) rho(ll[,c(j,i)],t))
         #rho_u = sapply(u, function(t) rho_nsc(ll[,c(j,i)],t))
         
+        q_ci = seq(0.01,0.99,length.out=20)
+        rho_ci = t(sapply(q_ci, function(t) rho.ci(ll[,c(j,i)],t)))
+        
         par(pty="s", xaxt="n", yaxt="n")
         plot(x=q, y=rho_q, type="l", ylim=c(-0.5,0.5), lwd=2, cex.axis=1.5)
         #plot(x=u, y=rho_u, type="l", ylim=c(-1,1), lwd=2, cex.axis=1.5)
         abline(h=0, col=c2, lty=3, lwd=2)
+        lines(x=q_ci, y=rho_ci[,1], lty=2, lwd=2)
+        lines(x=q_ci, y=rho_ci[,2], lty=2, lwd=2)
         
       }
     }
     
   }
+  print(paste("row",i,"done!",sep=" "))
 }
 
 dev.off()
