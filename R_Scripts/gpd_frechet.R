@@ -96,6 +96,7 @@ for (i in seq(1,12)){
         plot(pll, log="xy", xlim=c(0.1,1e4), ylim=c(0.1,1e4), 
              lwd=2, cex.axis=1.5,
              col=pal[1+as.integer(10*chi)])
+        abline(a=0, b=1, lty=3, col="grey", untf=TRUE)
         
       }
     }
