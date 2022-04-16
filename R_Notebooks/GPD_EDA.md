@@ -68,6 +68,24 @@ following :
 
 </p>
 
+## Comparing GPD parameters by sector
+
+<p align="center">
+
+</p>
+
+<p align="center">
+
+<img src="cache/GPD_EDA/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+<img src="cache/GPD_EDA/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+</p>
+
 ## Bivariate EDA : Technology/Energy
 
 In this section, we are interested in the asymptotic dependence between
@@ -86,7 +104,7 @@ the axis.
 
 <p align="center">
 
-<img src="cache/GPD_EDA/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -99,7 +117,7 @@ sectors.
 
 <p align="center">
 
-<img src="cache/GPD_EDA/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -109,7 +127,7 @@ of the coefficient of tail dependence \(\eta\).
 
 <p align="center">
 
-<img src="cache/GPD_EDA/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 </p>
 
@@ -120,6 +138,6 @@ Bivariate Extreme Value Distributions to Threshold Exceedances.
 
 <p align="center">
 
-<img src="cache/GPD_EDA/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="cache/GPD_EDA/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 </p>

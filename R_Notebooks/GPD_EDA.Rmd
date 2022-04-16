@@ -40,9 +40,7 @@ Using the univariate Generalized Pareto Distribution for EDA (Threshold selectio
 df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
 ll = -100*sapply(df[seq(3,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
-#ll = apply(ll, c(1,2), function(x) max(x,0))
 ll = data.frame(ll)
-ll$Date = df$Date[-1]
 ```
 
 ## Technology Sector
@@ -72,6 +70,27 @@ par(mfrow=c(1,1), oma=c(0,0,4,0))
 gpd.diag(fit)
 par(oma=c(0,0,0,0))
 title(main="Fitted GPD With Threshold u=2 - Diagnostic")
+```
+
+## Comparing GPD parameters by sector
+
+```{r}
+gpd_params = function(x,u){
+  fit = ismev::gpd.fit(x, threshold=u, npy=251, show=FALSE)
+  fit$mle
+}
+
+params = apply(ll,2, function(x) gpd_params(x,2))
+```
+
+```{r}
+par(mar=c(12,4,4,4))
+barplot(params[1,], las=3, main="Scale Parameter")
+```
+
+```{r echo=FALSE}
+par(mar=c(12,4,4,4))
+barplot(params[2,], las=3, main="Shape Parameter")
 ```
 
 ## Bivariate EDA : Technology/Energy
