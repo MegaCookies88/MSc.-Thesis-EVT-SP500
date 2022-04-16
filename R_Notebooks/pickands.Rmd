@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
 )
 
 library("evd")
+library("ismev")
 
 # Color Map
 c1 = "#636EFA"
@@ -155,8 +156,81 @@ legend(
 title(main=paste(sectors[s1],sectors[s2],sep="/"))
 ```
 
+## New Pickands Estimation - Test
 
+```{r}
+fst_correct = function(x,xe,r,sc,sh,u){
+  if(x>u){-1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))} else{xe}
+}
 
+gpd_rescale = function(x,u){
+  # Empirical transformation to Frechet scale
+  xe = -1/log(rank(x)/(length(x)+1))
+  # Fit gpd to exceedances and correct their transformation
+  fit = gpd.fit(x, threshold=u, npy=251, show=FALSE)
+  z = mapply(
+    function(a,b) fst_correct(a,b,fit$rate,fit$mle[1],fit$mle[2],u), x, xe
+  )
+  z
+}
+```
+
+```{r}
+source("../R_Scripts/EL_pickands_function.R")
+t = seq(0,1,0.01)
+```
+
+```{r}
+s1 = 1
+s2 = 4
+
+bll = apply(ll[,c(s1,s2)], 2, function(x) gpd_rescale(x,2))
+A = A_tild(t,bll,0.95,F)
+
+par(pty="s")
+plot(
+  t, A_tild(t,bll,0.85,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c1,
+  main=paste(sectors[s1],sectors[s2],sep="/"), ylab="A(t)"
+)
+lines(
+  t, A_tild(t,bll,0.90,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c2,
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+lines(
+  t, A, xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c3,
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+lines(t,rep(1,length(t)), lty=3)
+lines(t,sapply(t, function(x) max(x,1-x)), lty=3)
+lines(rep(0.5,length(t[t>=0.5])), t[t>=0.5], lty=2)
+points(t[which.min(A)],min(A), pch=16)
+```
+
+```{r}
+s1 = 3
+s2 = 12
+
+bll = apply(ll[,c(s1,s2)], 2, function(x) gpd_rescale(x,2))
+A = A_tild(t,bll,0.95,F)
+
+par(pty="s")
+plot(
+  t, A_tild(t,bll,0.85,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c1,
+  main=paste(sectors[s1],sectors[s2],sep="/"), ylab="A(t)"
+)
+lines(
+  t, A_tild(t,bll,0.90,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c2,
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+lines(
+  t, A, xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c3,
+  main=paste(sectors[s1],sectors[s2],sep="/")
+)
+lines(t,rep(1,length(t)), lty=3)
+lines(t,sapply(t, function(x) max(x,1-x)), lty=3)
+lines(rep(0.5,length(t[t>=0.5])), t[t>=0.5], lty=2)
+points(t[which.min(A)],min(A), pch=16)
+```
 
 
 
