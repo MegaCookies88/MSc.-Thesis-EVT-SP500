@@ -1,8 +1,10 @@
 ---
-title: "Extremes Dependence Decomposition"
+title: "Multivariate Tail Dependence Decomposition"
 author: "Mongi Nouira"
 output: github_document
 ---
+
+We propose a decomposition which help to summarize and describe multivariate tail dependence. It can be seen as an adaptation of PCA to the extremes.
 
 ```{r, include=FALSE}
 library(htmltools)
@@ -15,7 +17,7 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
   }
 })
 
-rmd_filename <- stringr::str_remove(knitr::current_input(), "\\.Rmd")
+rmd_filename = stringr::str_remove(knitr::current_input(), "\\.Rmd")
 knitr::opts_chunk$set(
   fig.path = stringr::str_c(file.path("cache", rmd_filename), "/")
 )
@@ -31,10 +33,10 @@ c2 = "#EF553B"
 c3 = "#00CC96"
 
 library("ismev")
+library("evir")
 library("gplots")
 library("lattice")
 library("RColorBrewer")
-pal = brewer.pal(10,"RdYlGn")
 ```
 
 ```{r}
@@ -50,64 +52,83 @@ sectors = as.vector(sectors)
 colnames(ll) = sectors
 ```
 
-```{r eval=FALSE, include=FALSE}
-# Keep Positive Losses Only
-ll = apply(ll, c(1,2), function(x) max(x,0))
+## Data Transformation
 
-# Plot 0
-par(pty="s")
-pairs(ll[,seq(1,3)], upper.panel=NULL)
+1. Keep only positive losses.
+2. Apply bijection x->log(1+exp(x)).
+3. Scale variables using empirical/gpd mixture to Frechet scale transformation.
 
-# Bijection 
-ll = apply(ll, c(1,2), function(x) log(1+exp(x)))
+The last two transformations are required by the framework. In particular, the tail index needs to be 2.
 
+```{r}
 # Plot 1
 par(pty="s")
-pairs(ll[,seq(1,3)], upper.panel=NULL)
-
-# Hill Estimator - Marginal Transform
-u = 2
-a = log(1+exp(2))
-ll = apply(ll, 2, function(x) (sd(x)^(-1/2))*(x^(a/2)))
-
-# Plot 2
-par(pty="s")
-pairs(ll[,seq(1,3)], upper.panel=NULL)
+pairs(ll[,seq(1,3)], upper.panel=NULL, main="Original Data")
 ```
 
 ```{r}
-# Keep Positive Losses Only
-ll = apply(ll, c(1,2), function(x) max(x,0))
-
 # Empirical/GPD transform
 fst_correct = function(x,xe,r,sc,sh,u){
   if(x>u){-1/log(1-r*(max(1+sh*(x-u)/sc,0)^(-1/sh)))} else{xe}
 }
-gpd_rescale = function(x,u){
-  fit = gpd.fit(x, threshold=u, npy=251, show=FALSE)
+
+gpd_rescale = function(x,u,emp=F,qua=F){
+  
+  # Empirical transformation to Frechet scale
   xe = -1/log(rank(x)/(length(x)+1))
-  z = mapply(
-    function(a,b) fst_correct(a,b,fit$rate,fit$mle[1],fit$mle[2],u), x, xe
-  )
+  
+  if(emp){
+    z = xe
+  }else{
+    if(qua){
+      u = quantile(x,0.95)
+    }
+    # Fit gpd to exceedances and correct their transformation
+    fit = gpd.fit(x, threshold=u, npy=251, show=F)
+    z = mapply(
+      function(a,b) fst_correct(a,b,fit$rate,fit$mle[1],fit$mle[2],u), x, xe
+    )
+  }
+  
+  # Transform unit Frechet (alpha=1) to RV alpha=2
+  z = sqrt(z)
   z
 }
-
-sll = apply(ll, 2, function(x) gpd_rescale(x,2))
 ```
 
 ```{r}
-# Plot 1
-par(pty="s")
-pairs(ll[,seq(1,3)], upper.panel=NULL)
+hill_rescale = function(x){
+  fit = gpd.fit(x, threshold=2, npy=251, show=FALSE)
+  sc = fit$mle[1]
+  al = 1/fit$mle[2]
+  print(paste("alpha =",round(al,2),"scale =",round(sc,2),sep=" "))
+  z = sqrt((x^al)/sc)
+  z
+  #hill(z,end=1500)
+}
+```
 
+```{r}
+# Keep Positive Losses Only - Bijection
+sll = apply(ll, c(1,2), function(x) log(1+exp(max(x,0))))
+
+sll = apply(sll, 2, function(x) gpd_rescale(x,2,emp=T,qua=T))
+#sll = apply(sll, 2, function(x) hill_rescale(x))
+print("---")
+#apply(sll, 2, function(x) hill_rescale(x))
+```
+
+```{r}
 # Plot 2
 par(pty="s")
-pairs(sll[,seq(1,3)], log="xy", upper.panel=NULL)
+pairs(sll[,seq(1,3)], log="xy", upper.panel=NULL, main="Transformed Data")
 ```
+
+## Tail Pairwise Dependence Matrix
 
 ```{r}
 # New Coordinates
-r = apply(sll, 1, function(x) norm(as.matrix(x), type="2"))
+r = apply(sll, 1, function(x) norm(as.matrix(x), type="1"))
 w = sll/r
 
 n = length(r)
@@ -123,12 +144,20 @@ S = (m/nr0) * t(W)%*%W
 ```
 
 ```{r}
+par(mar=c(12,4,4,4))
+barplot(diag(S), las=3, ylim=c(0,1.2), main="Matrix Diagonal")
+abline(h=1, lty=2, col=c2)
+```
+
+```{r}
 levelplot(
   S, xlab="", ylab="", 
   col.regions=colorRampPalette(brewer.pal(8, "Blues"))(25),
   pretty=TRUE, scales=list(x=list(rot=45))
 )
 ```
+
+## Eigen Decomposition
 
 ```{r message=FALSE, warning=FALSE}
 ED = eigen(S)
@@ -139,26 +168,26 @@ u = ED$vectors
 # sign change : describing losses better
 u[,1] = -u[,1]
 u[,2] = -u[,2]
+```
 
+### Eigen Values
+
+```{r}
 plot(e, type="l", xlab="Index", ylab="Eigen Value")
+```
 
+### Eigen Vectors
+
+```{r}
 heatmap.2(
   u[,1:4], Rowv=NA, Colv=NA, dendrogram="none",
-  col=pal, density.info="none", trace="none",
+  col=brewer.pal(10,"RdYlGn"), density.info="none", trace="none",
   cexCol=1, cexRow=1, srtCol=0,
   margins=c(5,15), keysize=2,
   labCol=c("u1","u2","u3","u4"), labRow=sectors)
 ```
 
-```{r}
-dw = apply(w, 1, function(x) t(u[,1:3])%*%x)
-dw = t(dw)
-
-par(mfrow=c(3,1))
-plot(as.Date(df$Date[-1]), y=dw[,1], type="l", xlab="Date", ylab="w1")
-plot(as.Date(df$Date[-1]), y=dw[,2], type="l", xlab="Date", ylab="w2")
-plot(as.Date(df$Date[-1]), y=dw[,3], type="l", xlab="Date", ylab="w3")
-```
+## Principal Components Time Series
 
 ```{r}
 dll = apply(ll, 1, function(x) t(u[,1:3])%*%x)
@@ -172,9 +201,9 @@ plot(as.Date(df$Date[-1]), y=dll[,3], type="l", xlab="Date", ylab="v3")
 
 ```{r}
 par(mfrow=c(3,1))
-plot(as.Date(df$Date[-1]), y=dll[,1], ylim=c(-5,45), type="l", xlab="Date", ylab="v1")
-plot(as.Date(df$Date[-1]), y=dll[,2], ylim=c(-5,45), type="l", xlab="Date", ylab="v2")
-plot(as.Date(df$Date[-1]), y=dll[,3], ylim=c(-5,45), type="l", xlab="Date", ylab="v3")
+plot(as.Date(df$Date[-1]), y=dll[,1], ylim=c(min(dll),max(dll)), type="l", xlab="Date", ylab="v1")
+plot(as.Date(df$Date[-1]), y=dll[,2], ylim=c(min(dll),max(dll)), type="l", xlab="Date", ylab="v2")
+plot(as.Date(df$Date[-1]), y=dll[,3], ylim=c(min(dll),max(dll)), type="l", xlab="Date", ylab="v3")
 ```
 
 ```{r}
@@ -186,9 +215,9 @@ plot(dll[,c(2,3)], xlab="v2", ylab="v3")
 
 ```{r}
 par(mfrow=c(1,3), pty="s")
-plot(dll[,c(1,2)], xlim=c(-5,40), ylim=c(-5,40), xlab="v1", ylab="v2")
-plot(dll[,c(1,3)], xlim=c(-5,40), ylim=c(-5,40), xlab="v1", ylab="v3")
-plot(dll[,c(2,3)], xlim=c(-5,40), ylim=c(-5,40), xlab="v2", ylab="v3")
+plot(dll[,c(1,2)], xlim=c(-5,40), ylim=c(min(dll),max(dll)), xlab="v1", ylab="v2")
+plot(dll[,c(1,3)], xlim=c(-5,40), ylim=c(min(dll),max(dll)), xlab="v1", ylab="v3")
+plot(dll[,c(2,3)], xlim=c(-5,40), ylim=c(min(dll),max(dll)), xlab="v2", ylab="v3")
 ```
 
 
