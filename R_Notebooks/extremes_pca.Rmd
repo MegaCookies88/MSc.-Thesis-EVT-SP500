@@ -74,6 +74,9 @@ fst_correct = function(x,xe,r,sc,sh,u){
 
 gpd_rescale = function(x,u,emp=F,qua=F){
   
+  # Scaling
+  #x = x/mad(x)
+  
   # Empirical transformation to Frechet scale
   xe = -1/log(rank(x)/(length(x)+1))
   
