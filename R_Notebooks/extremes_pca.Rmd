@@ -131,7 +131,7 @@ pairs(sll[,seq(1,3)], log="xy", upper.panel=NULL, main="Transformed Data")
 
 ```{r}
 # New Coordinates
-r = apply(sll, 1, function(x) norm(as.matrix(x), type="1"))
+r = apply(sll, 1, function(x) norm(as.matrix(x), type="2"))
 w = sll/r
 
 n = length(r)
