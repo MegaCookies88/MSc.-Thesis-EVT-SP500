@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 )
 
 knitr::opts_chunk$set(
-  echo=FALSE, cache=FALSE, imgcenter=TRUE,
+  echo=FALSE, cache=TRUE, imgcenter=TRUE,
   fig.align="center", dpi=150, fig.width=8, fig.height=6
 )
 
@@ -31,6 +31,7 @@ c2 = "#EF553B"
 c3 = "#00CC96"
 
 library("texmex")
+options(digits=2)
 ```
 
 
@@ -49,19 +50,54 @@ colnames(ll) = sectors
 
 
 ```{r}
-cmod <- mex(ll, which="Market", mth=2, dqu=0.9)
-summary(cmod)
+marg <- migpd(ll, mqu=0.9, penalty="none", family=gpd)
+summary(marg)$co
 ```
 
 
-```{r, fig.height=4}
+```{r eval=FALSE, include=FALSE}
+par(pty="s", mfcol=c(2,2))
+plot(marg)
+```
+
+
+```{r}
+#cmod <- mex(ll, which="Market", mth=2, dqu=0.9)
+
+cmod <- mexDependence(marg, which="Market", dqu=0.8, margins="laplace")
+cmod$dependence
+```
+
+
+```{r, fig.height=3}
 par(pty="s", mfcol=c(1,3))
 plot(cmod)
 ```
 
 
 ```{r}
-#mod <- evm(ll,)
+start = matrix(
+  c(0.1,0.1, 
+    0.1,0.1, 
+    0.2,0.2,
+    0.1,0.1,
+    0.2,0.2,
+    0.1,0.1,
+    0.1,0.1,
+    0.1,0.1,
+    0.1,0.1,
+    0.1,0.1,
+    0.1,0.1), 
+  nrow=2, ncol=11, byrow=F
+)
+
+mrf <- mexRangeFit(marg, which="Market", trace=11, start=start)
+```
+
+
+```{r}
+par(mfrow=c(3,2))
+plot(mrf)
 ```
 
 
