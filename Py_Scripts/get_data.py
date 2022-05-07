@@ -24,13 +24,15 @@ sp_sectors = {
 df = yf.download(tickers=list(sp_sectors.values()), period='max', group_by='ticker')
 df = df.T.xs('Adj Close', level=1, drop_level=True).T
 df = df.rename(columns=dict(map(reversed, sp_sectors.items())))
+df = df.reset_index()
 
 
 ## Clean
 
 df = df[df.Date>'2002-02-08']
 
-df = df[['Date','S&P Market','S&P Communication Services','S&P Technology',
+df = df[['Date',
+         'S&P Market','S&P Communication Services','S&P Technology',
          'S&P Industrial','S&P Materials','S&P Consumer Discretionary','S&P Financial',
          'S&P Health Care','S&P Consumer Staples',
          'S&P Utilities','S&P Real Estate','S&P Energy']]
