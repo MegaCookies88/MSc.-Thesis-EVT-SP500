@@ -71,6 +71,8 @@ Done in EDA section.
 
 <p align="center">
 
+    ## mexRangeFit run time: 477.18 sec elapsed
+
 </p>
 
 <p align="center">
@@ -93,14 +95,20 @@ Done in EDA section.
     ## Thresholding quantiles for transformed data: dqu = 0.7
     ## Using laplace margins for dependence estimation.
     ## Constrained estimation of dependence parameters using v = 10 .
-    ## Log-likelihood = -2097 -1589 -1522 -1863 -1501 -1707 -1885 -2022 -2363 -2192 -2116 
+    ## Log-likelihood = -2097 -1589 -1307 -1722 -1366 -1640 -1821 -2022 -2363 -2192 -2116 
     ## 
     ## Dependence structure parameter estimates:
     ##   Communication.Services Technology Industrial Materials Consumer.Discretionary
-    ## a                   0.81      0.884       0.47      0.35                   0.56
-    ## b                   0.14      0.075       0.41      0.44                   0.38
+    ## a                   0.83      0.884      0.979      0.93                  0.948
+    ## b                   0.13      0.075     -0.019      0.10                  0.078
     ##   Financial Health.Care Consumer.Staples Utilities Real.Estate Energy
-    ## a      0.63        0.53             0.81      0.79        0.77   0.87
-    ## b      0.33        0.38             0.16      0.14        0.14   0.13
+    ## a     0.925        0.88             0.82      0.79        0.77   0.87
+    ## b     0.097        0.14             0.15      0.15        0.14   0.13
+
+</p>
+
+<p align="center">
+
+<img src="cache/texmex/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-2.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-3.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-4.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-5.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-6.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-7.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-8.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-9.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-10.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-11-11.png" style="display: block; margin: auto;" />
 
 </p>
