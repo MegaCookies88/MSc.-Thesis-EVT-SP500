@@ -1,9 +1,6 @@
 .DS_Store
-data
 .ipynb_checkpoints
-R_Notebooks/.Rhistory
-R_Notebooks/GPD_EDA_cache/
-R_Notebooks/GEV_EDA_cache/
-R_Notebooks/Frechet_cache/
-R_Scripts/.Rhistory
+.Rhistory
+data
+R_Notebooks/texmex_cache/
 R_Scripts/EL_pickands_function.R
