@@ -6,6 +6,10 @@ Mongi Nouira
 
 </p>
 
+## Marginal GPD Model Fit
+
+### Summary
+
 <p align="center">
 
     ##                  Market Communication.Services Technology Industrial Materials
@@ -29,6 +33,14 @@ Mongi Nouira
 
 </p>
 
+### Diagnostic
+
+Done in EDA section.
+
+## Dependence Model Fit
+
+### Summary
+
 <p align="center">
 
     ## Conditioning on Market variable.
@@ -47,11 +59,15 @@ Mongi Nouira
 
 </p>
 
+### Diagnostic
+
 <p align="center">
 
 <img src="cache/texmex/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-2.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-3.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-4.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-5.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-6.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-7.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-8.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-9.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-10.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-6-11.png" style="display: block; margin: auto;" />
 
 </p>
+
+### Dependence Model Threshold Selection
 
 <p align="center">
 
@@ -60,5 +76,31 @@ Mongi Nouira
 <p align="center">
 
 <img src="cache/texmex/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-8-2.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-8-3.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-8-4.png" style="display: block; margin: auto;" />
+
+</p>
+
+### Dependence Model 2
+
+<p align="center">
+
+<img src="cache/texmex/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-2.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-3.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-4.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-5.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-6.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-7.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-8.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-9.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-10.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-9-11.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
+    ## Conditioning on Market variable.
+    ## Thresholding quantiles for transformed data: dqu = 0.7
+    ## Using laplace margins for dependence estimation.
+    ## Constrained estimation of dependence parameters using v = 10 .
+    ## Log-likelihood = -2097 -1589 -1522 -1863 -1501 -1707 -1885 -2022 -2363 -2192 -2116 
+    ## 
+    ## Dependence structure parameter estimates:
+    ##   Communication.Services Technology Industrial Materials Consumer.Discretionary
+    ## a                   0.81      0.884       0.47      0.35                   0.56
+    ## b                   0.14      0.075       0.41      0.44                   0.38
+    ##   Financial Health.Care Consumer.Staples Utilities Real.Estate Energy
+    ## a      0.63        0.53             0.81      0.79        0.77   0.87
+    ## b      0.33        0.38             0.16      0.14        0.14   0.13
 
 </p>

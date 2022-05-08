@@ -31,7 +31,9 @@ c2 = "#EF553B"
 c3 = "#00CC96"
 
 library("texmex")
+
 options(digits=2)
+set.seed(20130619)
 ```
 
 
@@ -48,50 +50,56 @@ sectors = as.vector(sectors)
 colnames(ll) = sectors
 ```
 
+## Marginal GPD Model Fit
+### Summary
 
 ```{r}
 marg <- migpd(ll, mqu=0.9, penalty="none", family=gpd)
 summary(marg)$co
 ```
 
+### Diagnostic
+Done in EDA section.
 
 ```{r eval=FALSE, include=FALSE}
-par(pty="s", mfcol=c(2,2))
-plot(marg)
+par(pty="s", mfcol=c(3,4))
+plot(marg, main="Return level plot")
 ```
 
+## Dependence Model Fit
+### Summary
 
 ```{r}
-#cmod <- mex(ll, which="Market", mth=2, dqu=0.9)
-
 cmod <- mexDependence(marg, which="Market", dqu=0.8, margins="laplace")
 cmod$dependence
 ```
 
+### Diagnostic
 
 ```{r, fig.height=3}
 par(pty="s", mfcol=c(1,3))
 plot(cmod)
 ```
 
+### Dependence Model Threshold Selection
 
 ```{r}
 start = matrix(
   c(0.1,0.1, 
     0.1,0.1, 
+    0.5,0.1,
+    0.5,0.1,
     0.2,0.2,
     0.1,0.1,
-    0.2,0.2,
     0.1,0.1,
     0.1,0.1,
     0.1,0.1,
-    0.1,0.1,
-    0.1,0.1,
-    0.1,0.1), 
+    0.1,0.01,
+    0.1,0.01), 
   nrow=2, ncol=11, byrow=F
 )
 
-mrf <- mexRangeFit(marg, which="Market", trace=11, start=start)
+mrf <- mexRangeFit(marg, which="Market", margins="laplace", start=start, trace=11)
 ```
 
 
@@ -100,6 +108,23 @@ par(mfrow=c(3,2))
 plot(mrf)
 ```
 
+### Dependence Model 2
+
+```{r}
+cmod <- mexDependence(marg, which="Market", dqu=0.7, margins="laplace", start=start,
+                      PlotLikDo=T, PlotLikRange=list(a=c(0,1),b=c(-1,1)))
+```
+
+
+```{r}
+cmod$dependence
+```
+
+
+```{r, fig.height=3}
+par(pty="s", mfcol=c(1,3))
+plot(cmod)
+```
 
 
 
