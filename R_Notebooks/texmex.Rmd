@@ -31,6 +31,7 @@ c2 = "#EF553B"
 c3 = "#00CC96"
 
 library("texmex")
+library("tictoc")
 
 options(digits=2)
 set.seed(20130619)
@@ -99,7 +100,9 @@ start = matrix(
   nrow=2, ncol=11, byrow=F
 )
 
+tic("mexRangeFit run time")
 mrf <- mexRangeFit(marg, which="Market", margins="laplace", start=start, trace=11)
+toc()
 ```
 
 
