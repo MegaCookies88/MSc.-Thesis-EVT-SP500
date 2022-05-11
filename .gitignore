@@ -1,6 +1,7 @@
 .DS_Store
 .ipynb_checkpoints
 .Rhistory
+.RData
 data
 R_Notebooks/texmex_cache/
 R_Scripts/EL_pickands_function.R
