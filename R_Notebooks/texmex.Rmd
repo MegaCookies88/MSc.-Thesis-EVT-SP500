@@ -71,7 +71,7 @@ plot(marg, main="Return level plot")
 ### Summary
 
 ```{r}
-cmod <- mexDependence(marg, which="Market", dqu=0.8, margins="laplace")
+cmod <- mexDependence(marg, which="Market", dqu=0.75, margins="laplace")
 cmod$dependence
 ```
 

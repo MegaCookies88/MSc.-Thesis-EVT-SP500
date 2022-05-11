@@ -44,18 +44,18 @@ Done in EDA section.
 <p align="center">
 
     ## Conditioning on Market variable.
-    ## Thresholding quantiles for transformed data: dqu = 0.8
+    ## Thresholding quantiles for transformed data: dqu = 0.75
     ## Using laplace margins for dependence estimation.
     ## Constrained estimation of dependence parameters using v = 10 .
-    ## Log-likelihood = -1457 -1189 -982 -1229 -992 -1200 -1284 -1448 -1624 -1540 -1464 
+    ## Log-likelihood = -1793 -1369 -1194 -1561 -1304 -1476 -1583 -1766 -2008 -1860 -1870 
     ## 
     ## Dependence structure parameter estimates:
     ##   Communication.Services Technology Industrial Materials Consumer.Discretionary
-    ## a                   0.85       0.12       0.50      0.68                   0.55
-    ## b                   0.18       0.57       0.48      0.32                   0.48
+    ## a                   0.84      0.895        0.7      0.43                   0.41
+    ## b                   0.13      0.068        0.3      0.45                   0.45
     ##   Financial Health.Care Consumer.Staples Utilities Real.Estate Energy
-    ## a      0.60        0.75             0.48      0.85        0.74  0.912
-    ## b      0.35        0.25             0.38      0.19        0.25  0.091
+    ## a      0.63        0.65             0.51      0.82        0.83   0.32
+    ## b      0.33        0.32             0.30      0.16        0.13   0.38
 
 </p>
 
@@ -71,7 +71,7 @@ Done in EDA section.
 
 <p align="center">
 
-    ## mexRangeFit run time: 477.18 sec elapsed
+    ## mexRangeFit run time: 507.779 sec elapsed
 
 </p>
 
