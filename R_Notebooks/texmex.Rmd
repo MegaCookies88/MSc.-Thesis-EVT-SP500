@@ -43,6 +43,7 @@ df = read.csv("~/Documents/GitHub/PDM_2022/data/data1.csv")
 
 # Data
 ll = -100*sapply(df[seq(2,ncol(df))], function(x) log(x[-1])-log(x[-length(df$Date)]))
+ll = apply(ll, c(1,2), function(x) max(x,0))
 ll = data.frame(ll)
 
 # Sectors
@@ -71,7 +72,7 @@ plot(marg, main="Return level plot")
 ### Summary
 
 ```{r}
-cmod <- mexDependence(marg, which="Market", dqu=0.75, margins="laplace")
+cmod <- mexDependence(marg, which="Market", dqu=0.8, margins="laplace")
 cmod$dependence
 ```
 
@@ -86,20 +87,25 @@ plot(cmod)
 
 ```{r}
 start = matrix(
-  c(0.1,0.1, 
-    0.1,0.1, 
-    0.5,0.1,
-    0.5,0.1,
-    0.2,0.2,
-    0.1,0.1,
-    0.1,0.1,
-    0.1,0.1,
-    0.1,0.1,
-    0.1,0.01,
-    0.1,0.01), 
+  c(0.5,0.2, 
+    0.1,0.2, 
+    0.5,0.2,
+    0.6,0.2,
+    0.6,0.2,
+    0.6,0.2,
+    0.4,0.2,
+    0.6,0.2,
+    0.5,0.2,
+    0.5,0.2,
+    0.5,0.2), 
   nrow=2, ncol=11, byrow=F
 )
 
+last = coef(cmod$dependence)[1:2,]
+```
+
+
+```{r}
 tic("mexRangeFit run time")
 mrf <- mexRangeFit(marg, which="Market", margins="laplace", start=start, trace=11)
 toc()
@@ -114,7 +120,7 @@ plot(mrf)
 ### Dependence Model 2
 
 ```{r}
-cmod <- mexDependence(marg, which="Market", dqu=0.7, margins="laplace", start=start,
+cmod <- mexDependence(marg, which="Market", dqu=0.75, margins="laplace", start=start,
                       PlotLikDo=T, PlotLikRange=list(a=c(0,1),b=c(-1,1)))
 ```
 
