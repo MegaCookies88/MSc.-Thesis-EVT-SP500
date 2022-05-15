@@ -136,4 +136,18 @@ plot(cmod)
 ```
 
 
+```{r}
+pred = predict(cmod, pqu=0.9, nsim=nrow(ll))
+summary(pred)
+```
+
+
+```{r}
+par(pty="s", mfrow=c(3,4), mar=c(2,4,1,1))
+plot(pred)
+```
+
+
+
+
 
