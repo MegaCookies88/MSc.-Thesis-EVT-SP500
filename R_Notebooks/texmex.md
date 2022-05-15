@@ -116,3 +116,61 @@ Done in EDA section.
 <img src="cache/texmex/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-2.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-3.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-4.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-5.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-6.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-7.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-8.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-9.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-10.png" style="display: block; margin: auto;" /><img src="cache/texmex/unnamed-chunk-12-11.png" style="display: block; margin: auto;" />
 
 </p>
+
+<p align="center">
+
+    ## predict.mex(object = cmod, pqu = 0.9, nsim = nrow(ll))
+    ## 
+    ## Conditioned on Market being above its 90th percentile.
+    ## 
+    ## 
+    ## Conditional Mean and Quantiles:
+    ## 
+    ##      Market|Market>Q90 Communication.Services|Market>Q90 Technology|Market>Q90
+    ## mean               2.3                              1.93                  2.48
+    ## 5%                 1.3                              0.42                  0.85
+    ## 50%                1.9                              1.61                  2.20
+    ## 95%                4.6                              4.53                  4.99
+    ##      Industrial|Market>Q90 Materials|Market>Q90
+    ## mean                  2.34                 2.44
+    ## 5%                    0.93                 0.76
+    ## 50%                   1.99                 2.12
+    ## 95%                   5.00                 5.12
+    ##      Consumer.Discretionary|Market>Q90 Financial|Market>Q90
+    ## mean                              2.30                 2.93
+    ## 5%                                0.86                 0.85
+    ## 50%                               2.01                 2.28
+    ## 95%                               4.65                 7.01
+    ##      Health.Care|Market>Q90 Consumer.Staples|Market>Q90 Utilities|Market>Q90
+    ## mean                   1.67                        1.31                 1.54
+    ## 5%                     0.43                        0.27                 0.18
+    ## 50%                    1.45                        1.13                 1.22
+    ## 95%                    3.64                        2.88                 3.92
+    ##      Real.Estate|Market>Q90 Energy|Market>Q90
+    ## mean                   2.42               2.5
+    ## 5%                     0.35               0.5
+    ## 50%                    1.77               2.1
+    ## 95%                    6.55               5.9
+    ## 
+    ## Conditional probability of threshold exceedance:
+    ## 
+    ##  P(Market>1.22412|Market>Q90) P(Communication.Services>1.38083|Market>Q90)
+    ##                             1                                         0.59
+    ##  P(Technology>1.64517|Market>Q90) P(Industrial>1.37699|Market>Q90)
+    ##                              0.74                             0.79
+    ##  P(Materials>1.5741|Market>Q90) P(Consumer.Discretionary>1.44643|Market>Q90)
+    ##                            0.71                                         0.78
+    ##  P(Financial>1.67156|Market>Q90) P(Health.Care>1.13911|Market>Q90)
+    ##                             0.73                              0.67
+    ##  P(Consumer.Staples>0.922603|Market>Q90) P(Utilities>1.25301|Market>Q90)
+    ##                                     0.63                            0.49
+    ##  P(Real.Estate>1.59122|Market>Q90) P(Energy>1.8516|Market>Q90)
+    ##                               0.56                        0.58
+
+</p>
+
+<p align="center">
+
+<img src="cache/texmex/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+
+</p>
