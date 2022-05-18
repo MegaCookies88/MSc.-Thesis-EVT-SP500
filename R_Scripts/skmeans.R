@@ -18,15 +18,18 @@ ll = apply(ll, 2, function(x) 1/(1-rank(x)/(length(x)+1)))
 r = apply(ll, 1, function(x) norm(as.matrix(x), type="2"))
 w = ll/r
 
-# Threshold
-r0 = quantile(r,0.9)
+# Parameters : Threshold / Number of clusters
+r0 = quantile(r,0.95)
+K = c(2,3,4,5,6,7)
 
-# Clustering
-set.seed(1234)
-skm <- skmeans(w[r>r0,], k=7, method=NULL, m=1, weights=1)
-labels = skm$cluster
-centers = skm$prototypes
-
-# Save
-write.csv(centers, "~/Documents/GitHub/PDM_2022/data/skmeans_centers.csv")
-write.csv(labels, "~/Documents/GitHub/PDM_2022/data/skmeans_labels.csv")
+for (k in K) {
+  # Clustering
+  set.seed(1234)
+  skm <- skmeans(w[r>r0,], k=k, method=NULL, m=1, weights=1)
+  labels = skm$cluster
+  centers = skm$prototypes
+  
+  # Save
+  write.csv(centers, paste("~/Documents/GitHub/PDM_2022/data/skmeans",k,"_centers.csv",sep=""))
+  write.csv(labels, paste("~/Documents/GitHub/PDM_2022/data/skmeans",k,"_labels.csv",sep=""))
+}
