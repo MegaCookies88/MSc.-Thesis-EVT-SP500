@@ -135,6 +135,14 @@ par(pty="s", mfcol=c(1,3))
 plot(cmod)
 ```
 
+```{r}
+params = cmod$dependence$coefficients[1:2,]
+
+par(pty="s")
+plot(t(params), xlim=c(0.5,1.4), ylim=c(0.05,0.33), col=c1)
+text(t(params), colnames(params), pos=4, offset=0.5, cex=0.5)
+```
+
 
 ```{r}
 pred = predict(cmod, pqu=0.9, nsim=nrow(ll))

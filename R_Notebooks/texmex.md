@@ -119,6 +119,12 @@ Done in EDA section.
 
 <p align="center">
 
+<img src="cache/texmex/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+
+</p>
+
+<p align="center">
+
     ## predict.mex(object = cmod, pqu = 0.9, nsim = nrow(ll))
     ## 
     ## Conditioned on Market being above its 90th percentile.
@@ -171,6 +177,6 @@ Done in EDA section.
 
 <p align="center">
 
-<img src="cache/texmex/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="cache/texmex/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 </p>
