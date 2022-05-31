@@ -33,7 +33,7 @@ os.system("R < '../R_Scripts/skmeans.R' --no-save")
 
 def R_kmeans(k):
     centers = pd.read_csv('../data/skmeans'+str(k)+'_centers.csv').iloc[:,1:]
-    centers.columns = ll.columns[1:]
+    centers.columns = ll.columns
     centers.index = ['C'+str(i) for i in range(1,k+1)]
     labels = pd.read_csv('../data/skmeans'+str(k)+'_labels.csv').iloc[:,1]
     labels.index = w[r>r0].index
