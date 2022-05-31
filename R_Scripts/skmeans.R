@@ -41,7 +41,7 @@ w = ll/r
 
 # Parameters : Threshold / Number of clusters
 r0 = quantile(r,0.95)
-K = c(2,3,4,5,6,7)
+K = c(4,5,6,7)
 
 for (k in K) {
   # Clustering
