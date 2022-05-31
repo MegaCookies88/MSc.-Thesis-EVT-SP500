@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import plotly.io as pio
@@ -24,6 +25,9 @@ z = ll.apply(lambda x: 1/(1-x.rank()/(len(x)+1)), axis=0)
 r = z.apply(lambda x: np.linalg.norm(x,2), axis=1)
 w = z.div(r, axis=0)
 r0 = np.quantile(r,0.95)
+
+## Run R script
+os.system("R < '../R_Scripts/skmeans.R' --no-save")
 
 ## Functions
 
