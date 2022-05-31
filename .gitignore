@@ -5,3 +5,4 @@
 data
 R_Notebooks/texmex_cache/
 R_Scripts/EL_pickands_function.R
+*.pyc
