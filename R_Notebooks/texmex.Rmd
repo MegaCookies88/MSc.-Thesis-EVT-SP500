@@ -50,29 +50,27 @@ ll = data.frame(ll)
 sectors = sapply(colnames(ll)[1:12], function(x) substring(x,5))
 sectors = as.vector(sectors)
 colnames(ll) = sectors
+
+# Filter
+#ll = ll[!(ll$Market==0 & apply(ll[,2:12]!=0,1,any)),]
 ```
 
 ## Marginal GPD Model Fit
 ### Summary
 
 ```{r}
-marg <- migpd(ll, mqu=0.9, penalty="none", family=gpd)
+marg <- migpd(ll, mth=2, penalty="none", family=gpd)
 summary(marg)$co
 ```
 
 ### Diagnostic
 Done in EDA section.
 
-```{r eval=FALSE, include=FALSE}
-par(pty="s", mfcol=c(3,4))
-plot(marg, main="Return level plot")
-```
-
 ## Dependence Model Fit
 ### Summary
 
 ```{r}
-cmod <- mexDependence(marg, which="Market", dqu=0.8, margins="laplace")
+cmod <- mexDependence(marg, which="Market", dqu=0.9, margins="laplace", constrain=TRUE)
 cmod$dependence
 ```
 
@@ -107,7 +105,8 @@ last = coef(cmod$dependence)[1:2,]
 
 ```{r}
 tic("mexRangeFit run time")
-mrf <- mexRangeFit(marg, which="Market", margins="laplace", start=start, trace=11)
+mrf <- mexRangeFit(marg, which="Market", margins="laplace", constrain=TRUE, start=start, 
+                   quantiles=c(0.8,0.85,0.9,0.95), trace=11)
 toc()
 ```
 
@@ -120,7 +119,7 @@ plot(mrf)
 ### Dependence Model 2
 
 ```{r}
-cmod <- mexDependence(marg, which="Market", dqu=0.75, margins="laplace", start=start,
+cmod <- mexDependence(marg, which="Market", dqu=0.95, margins="laplace", start=start,
                       PlotLikDo=T, PlotLikRange=list(a=c(0,1),b=c(-1,1)))
 ```
 
@@ -139,8 +138,9 @@ plot(cmod)
 params = cmod$dependence$coefficients[1:2,]
 
 par(pty="s")
-plot(t(params), xlim=c(0.5,1.4), ylim=c(0.05,0.33), col=c1)
+plot(t(params), xlim=c(0.5,1.4), ylim=c(-0.1,0.22), col=c1)
 text(t(params), colnames(params), pos=4, offset=0.5, cex=0.5)
+grid()
 ```
 
 
