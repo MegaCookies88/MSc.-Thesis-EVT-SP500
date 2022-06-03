@@ -79,28 +79,21 @@ for (i in c(1,2,3)) {
   )
   params = cmod$dependence$coefficients[1:2,]
   if (i==1) {
-    plot(t(params[,order(params[2,], decreasing=T)]), col=c[i], cex=2, lwd=2, 
+    plot(t(params), col=c[i], cex=1.5, lwd=2, 
          cex.axis=1.5, pch=seq(0,10), type="p",
-         xlim=c(0.6,1.2), ylim=c(-0.4,0.4), xlab="alpha", ylab="beta")
+         xlim=c(0.6,1.1), ylim=c(-0.4,0.4), xlab="alpha", ylab="beta")
   } else {
-    lines(t(params[,order(params[2,], decreasing=T)]), col=c[i], cex=2, lwd=2, 
+    lines(t(params), col=c[i], cex=1.5, lwd=2, 
           cex.axis=1.5, pch=seq(0,10), type="p")
   }
 }
-text(t(params), colnames(params), pos=4, offset=1, cex=1)
-legend(
-  "bottomright", 
-  legend=c("q=0.8","q=0.9","q=0.95"), 
-  fill=c, border="black", cex=1.5
-)
+#text(t(params), colnames(params), pos=4, offset=1, cex=1)
 grid()
+legend(
+  "topright", legend=c("q=0.8","q=0.9","q=0.95"), 
+  fill=c, border="black", cex=1, bg="white"
+)
+legend(
+  "bottomleft", legend=sectors[2:12], pch=seq(0,10), cex=1, bg="white"
+)
 dev.off()
-
-
-
-
-
-
-
-
-
