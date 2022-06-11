@@ -23,7 +23,7 @@ jpeg(
 par(mfrow=c(3,4), pty="m", mar=rep(6,4), cex.lab=2, cex.axis=2, lwd=2)
 
 for (i in seq(1,12)){
-  mrl.plot(ll[,i], conf=0.95, umin=-5, umax=10)
+  mrl.plot(ll[,i], conf=0.95, umin=0, umax=10)
   title(main=sectors[i], cex.main=2.5)
 }
 
