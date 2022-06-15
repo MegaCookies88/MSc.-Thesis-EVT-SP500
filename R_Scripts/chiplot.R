@@ -40,7 +40,19 @@ for (i in seq(1,12)){
              cex=3, font=2, col="black", srt=0)
       } else{
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
         
         evd::chiplot(
           ll[,c(j,i)], which=1, 

@@ -48,7 +48,20 @@ for (i in seq(1,12)){
         pp = "pickands"
         cc = "cfg"
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
+        
         abvnonpar(data = cml, epmar = TRUE, method = pp, plot = TRUE, lty = 1, col=c1, lwd=2)
         abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 1, lty = 2, lwd=2)
         abvnonpar(data = cml, epmar = TRUE, method = pp, add = TRUE, madj = 2, lty = 4, lwd=2)

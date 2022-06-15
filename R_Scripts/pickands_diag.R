@@ -63,7 +63,20 @@ for (i in seq(1,12)){
         t = seq(0,1,0.01)
         A = A_tild(t,bll,0.95,F)
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
+        
         plot(t, A_tild(t,bll,0.8,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c1)
         lines(t, A_tild(t,bll,0.9,F), xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c2)
         lines(t, A, xlim=c(0,1), ylim=c(0.5,1), type='l', lwd=2, col=c3)

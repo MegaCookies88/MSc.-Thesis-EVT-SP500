@@ -46,7 +46,20 @@ for (i in seq(1,12)){
         #cc = "pickands"
         cc = "cfg"
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
+        
         abvnonpar(data = bll[bll[,1]>1.5 & bll[,2]>1.5,], 
                   epmar=TRUE, method=cc, plot=TRUE, lty=1, col=c1, lwd=2)
         abvnonpar(data = bll[bll[,1]>2 & bll[,2]>2,], 
