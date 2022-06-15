@@ -56,12 +56,11 @@ dev.off()
 
 # Dependence model - mqu=0.95 - diagnostic
 cmod <- mexDependence(
-  marg, which="Market", dqu=0.95, margins="laplace", start=start,
-  PlotLikDo=T, PlotLikRange=list(a=c(0,1),b=c(-1,1))
+  marg, which="Market", dqu=0.95, margins="laplace", start=start
 )
 
 pdf(file = "~/Documents/GitHub/PDM_2022/figures/cmod_diag.pdf")
-par(pty="s", mfrow=c(3,3), mar=c(0,0,0,0), oma=c(4,4,4,4), xaxt="n", yaxt="n")
+par(pty="s", mfrow=c(3,3), mar=c(0,2.5,0,0), oma=rep(4,4), cex.lab=0.5)
 plot(cmod, lwd=2, cex=0.2)
 dev.off()
 
