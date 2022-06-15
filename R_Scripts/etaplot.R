@@ -44,7 +44,20 @@ for (i in seq(1,12)){
         fla = apply(-1/log(ula),1,min)
         u_fla = quantile(fla, probs=c(0.025,0.975))
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
+        
         tcplot(fla, u_fla, nt=25, pscale=TRUE, which=2, vci=FALSE, cilty=2, 
                type="l", ylim=c(0.5,1.2), ylab="", xlab="", lwd=2)
         abline(h=1, col=c2, lty=3, lwd=2)
