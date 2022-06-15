@@ -75,7 +75,20 @@ for (i in seq(1,12)){
         q_ci = seq(0.01,0.99,length.out=20)
         rho_ci = t(sapply(q_ci, function(t) rho.ci(ll[,c(j,i)],t)))
         
-        par(pty="s", xaxt="n", yaxt="n")
+        if (i<12){
+          par(xaxt="n")
+        } else{
+          par(xaxt="s")
+        }
+        
+        if (j>1){
+          par(yaxt="n")
+        } else{
+          par(yaxt="s")
+        }
+        
+        par(cex.axis=1.5)
+        
         plot(x=q, y=rho_q, type="l", ylim=c(-0.5,0.5), lwd=2, cex.axis=1.5)
         #plot(x=u, y=rho_u, type="l", ylim=c(-1,1), lwd=2, cex.axis=1.5)
         abline(h=0, col=c2, lty=3, lwd=2)
