@@ -98,7 +98,7 @@ e = e[:5]
 u = pd.DataFrame(u[:,:5], index=ll.columns, columns=['u'+str(i) for i in range(1,6)])
 u.iloc[:,0] *= np.sign(u.iloc[:,0].sum())
 
-v = ll.applymap(lambda x: max(x,0)).dot(u)
+v = np.log(np.exp(ll.apply(rv2_transform, axis=0))-1).dot(u)
 v.columns = ['v'+str(i) for i in range(1,6)]
                         
 fig = plot_loadings(u)
