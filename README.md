@@ -1,5 +1,5 @@
-# The structure of extreme events in the sectors of the S&P 500
-## Master Thesis - Applied Mathematics - EPFL - 2022
+## The structure of extreme events in the sectors of the S&P 500
+### Master Thesis - Applied Mathematics - EPFL - 2022
 We use extreme value theory to extract a structure of extreme events and detect patterns in extremal observations.
 
 Documents to read:
